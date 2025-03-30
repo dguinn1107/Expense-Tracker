@@ -3,10 +3,61 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ExpenseTracker.MainPage">
 
-    <ScrollView>
-        <Grid>
+    <!-- Grid Layout Definition -->
+    <!-- 
+        RowDefinitions:
+        - Row 0: Header (Auto height)
+        - Row 1: Main content area (* = takes remaining space)
+        - Row 2: Footer navigation bar (Auto height)
 
-        </Grid>
-    </ScrollView>
+        ColumnDefinitions:
+        - Two equal columns for symmetrical layout
+    -->
+    <Grid RowDefinitions="Auto, *, Auto"
+          ColumnDefinitions="*, *">
 
+        <!-- Header Section -->
+        <Label Text="Expense Tracker"           
+               FontSize="24" 
+            Grid.Row="0"
+            Grid.ColumnSpan="2"
+            HorizontalOptions="Center" />
+            <!-- Centers the label horizontally -->
+
+            <!-- Main Content Area -->
+            <!-- ScrollView enables scrolling for long content -->
+            <ScrollView Grid.Row="1" Grid.ColumnSpan="2">
+                <VerticalStackLayout>
+                    <!-- Expense items will be dynamically added here -->
+                    <!-- Placeholder for future content -->
+                </VerticalStackLayout>
+            </ScrollView>
+
+            <!-- Footer Navigation Bar -->
+            <!-- Fixed at the bottom with buttons for navigation -->
+            <Grid Grid.Row="2" Grid.ColumnSpan="2" BackgroundColor="LightGray">
+
+                <!-- Horizontal button layout for navigation -->
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="30">
+
+                    <!-- Navigation Buttons -->
+                    <Button Text="Add"               
+                        Command="{Binding GoToAddExpense}" />
+                    <!-- Add Expense button -->
+
+                    <Button Text="History"           
+                        Command="{Binding GoToHistory}" />
+                    <!-- History button -->
+
+                    <Button Text="Report"            
+                        Command="{Binding GoToReport}" />
+                    <!-- Reports button -->
+
+                    <Button Text="Settings"          
+                        Command="{Binding GoToSettings}" />
+                    <!-- Settings button -->
+
+                </HorizontalStackLayout>
+            </Grid>
+    </Grid>
 </ContentPage>

@@ -7,9 +7,35 @@
     Shell.FlyoutBehavior="Disabled"
     Title="ExpenseTracker">
 
+    <!-- Main Page Shell -->
     <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
 
+    <!-- Add Expense Page -->
+    <ShellContent
+        Title="Add Expense"
+        ContentTemplate="{DataTemplate local:AddExpensePage}"
+        Route="addexpense" />
+
+    <!-- History Page -->
+    <ShellContent
+        Title="History"
+        ContentTemplate="{DataTemplate local:HistoryPage}"
+        Route="history" />
+
+    <!-- Reports Page Shell -->
+    <ShellContent
+        Title="Reports"
+        ContentTemplate="{DataTemplate local:ReportsPage}"
+        Route="reports" />
+
+    <!-- Settings Page Shell -->
+    <ShellContent
+        Title="Settings"
+        ContentTemplate="{DataTemplate local:SettingsPage}"
+        Route="settings" />
+
 </Shell>
+
