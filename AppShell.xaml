@@ -7,35 +7,46 @@
     Shell.FlyoutBehavior="Disabled"
     Title="ExpenseTracker">
 
-    <!-- Main Page Shell -->
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+	<!-- Tab Bar -->
+	<TabBar>
 
-    <!-- Add Expense Page -->
-    <ShellContent
-        Title="Add Expense"
-        ContentTemplate="{DataTemplate local:AddExpensePage}"
-        Route="addexpense" />
+		<!-- Home Tab -->
+		<ShellContent
+            Title="Home"
+            Icon="home_icon.png"
+            ContentTemplate="{DataTemplate local:MainPage}"
+            Route="MainPage" />
 
-    <!-- History Page -->
-    <ShellContent
-        Title="History"
-        ContentTemplate="{DataTemplate local:HistoryPage}"
-        Route="history" />
+		<!-- Add Expense Tab -->
+		<ShellContent
+            Title="Add Expense"
+            Icon="add_icon.png"
+            ContentTemplate="{DataTemplate local:AddExpensePage}"
+            Route="addexpense" />
 
-    <!-- Reports Page Shell -->
-    <ShellContent
-        Title="Reports"
-        ContentTemplate="{DataTemplate local:ReportsPage}"
-        Route="reports" />
+		<!-- History Tab -->
+		<ShellContent
+            Title="History"
+            Icon="history_icon.png"
+            ContentTemplate="{DataTemplate local:HistoryPage}"
+            Route="history" />
 
-    <!-- Settings Page Shell -->
-    <ShellContent
-        Title="Settings"
-        ContentTemplate="{DataTemplate local:SettingsPage}"
-        Route="settings" />
+		<!-- Reports Tab -->
+		<ShellContent
+            Title="Reports"
+            Icon="report_icon.png"
+            ContentTemplate="{DataTemplate local:ReportsPage}"
+            Route="reports" />
+
+		<!-- Settings Tab -->
+		<ShellContent
+            Title="Settings"
+            Icon="settings_icon.png"
+            ContentTemplate="{DataTemplate local:SettingsPage}"
+            Route="settings" />
+
+	</TabBar>
 
 </Shell>
+
 
