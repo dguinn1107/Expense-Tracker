@@ -6,21 +6,35 @@
 
     <ScrollView>
         <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
 
-            <Label Text="Analytics Graph" 
-               Grid.Row="0" 
-               HorizontalOptions="Center" 
-               VerticalOptions="Center" />
-
-            <ContentView Grid.Row="1">
-                <!-- Our Graph -->
-                <microcharts:ChartView x:Name="CurrentExpensesChartView" />
-            </ContentView>
         </Grid>
     </ScrollView>
 
+            <!-- Footer Navigation Bar -->
+            <!-- Fixed at the bottom with buttons for navigation -->
+            <Grid Grid.Row="2" Grid.ColumnSpan="2" BackgroundColor="LightGray">
+
+                <!-- Horizontal button layout for navigation -->
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="30">
+
+                    <!-- Navigation Buttons -->
+                    <Button Text="Add"               
+                        Command="{Binding GoToAddExpense}" />
+                    <!-- Add Expense button -->
+
+                    <Button Text="History"           
+                        Command="{Binding GoToHistory}" />
+                    <!-- History button -->
+
+                    <Button Text="Report"            
+                        Command="{Binding GoToReport}" />
+                    <!-- Reports button -->
+
+                    <Button Text="Settings"          
+                        Command="{Binding GoToSettings}" />
+                    <!-- Settings button -->
+
+                </HorizontalStackLayout>
+            </Grid>
+    </Grid>
 </ContentPage>

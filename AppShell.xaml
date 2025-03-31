@@ -7,9 +7,46 @@
     Shell.FlyoutBehavior="Disabled"
     Title="ExpenseTracker">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+	<!-- Tab Bar -->
+	<TabBar>
+
+		<!-- Home Tab -->
+		<ShellContent
+            Title="Home"
+            Icon="home_icon.png"
+            ContentTemplate="{DataTemplate local:MainPage}"
+            Route="MainPage" />
+
+		<!-- Add Expense Tab -->
+		<ShellContent
+            Title="Add Expense"
+            Icon="add_icon.png"
+            ContentTemplate="{DataTemplate local:AddExpensePage}"
+            Route="addexpense" />
+
+		<!-- History Tab -->
+		<ShellContent
+            Title="History"
+            Icon="history_icon.png"
+            ContentTemplate="{DataTemplate local:HistoryPage}"
+            Route="history" />
+
+		<!-- Reports Tab -->
+		<ShellContent
+            Title="Reports"
+            Icon="report_icon.png"
+            ContentTemplate="{DataTemplate local:ReportsPage}"
+            Route="reports" />
+
+		<!-- Settings Tab -->
+		<ShellContent
+            Title="Settings"
+            Icon="settings_icon.png"
+            ContentTemplate="{DataTemplate local:SettingsPage}"
+            Route="settings" />
+
+	</TabBar>
 
 </Shell>
+
+
