@@ -21,29 +21,29 @@
 		<ShellContent
             Title="Add Expense"
             Icon="add_icon.png"
-            ContentTemplate="{DataTemplate local:AddExpensePage}"
-            Route="addexpense" />
+            ContentTemplate="{DataTemplate local:AddExpense}"
+            Route="AddExpense" />
 
 		<!-- History Tab -->
 		<ShellContent
             Title="History"
             Icon="history_icon.png"
-            ContentTemplate="{DataTemplate local:HistoryPage}"
-            Route="history" />
+            ContentTemplate="{DataTemplate local:History}"
+            Route="History" />
 
 		<!-- Reports Tab -->
 		<ShellContent
             Title="Reports"
             Icon="report_icon.png"
-            ContentTemplate="{DataTemplate local:ReportsPage}"
-            Route="reports" />
+            ContentTemplate="{DataTemplate local:Reports}"
+            Route="Reports" />
 
 		<!-- Settings Tab -->
 		<ShellContent
             Title="Settings"
             Icon="settings_icon.png"
-            ContentTemplate="{DataTemplate local:SettingsPage}"
-            Route="settings" />
+            ContentTemplate="{DataTemplate local:Settings}"
+            Route="Settings" />
 
 	</TabBar>
 
