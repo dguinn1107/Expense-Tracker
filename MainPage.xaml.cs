@@ -30,6 +30,11 @@ namespace ExpenseTracker
             // Set chart data to the ChartView
             CurrentExpensesChartView.Chart = new BarChart { Entries = chartEntries };
         }
+
+        public void OnSettingsClicked(object sender, EventArgs e)
+        {
+            
+        }
     }
 
 }
