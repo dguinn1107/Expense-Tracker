@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:microcharts="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
              x:Class="ExpenseTracker.MainPage">
-    <Grid RowDefinitions="Auto, *, Auto">
+    <Grid RowDefinitions="Auto, *, Auto"
+          BackgroundColor="{DynamicResource AppBackgroundColor}">
+        
         <!-- Header Section -->
         <Grid Grid.Row="0" Padding="15" BackgroundColor="White">
             <Grid ColumnDefinitions="*, Auto" Margin="0,0,0,15">
