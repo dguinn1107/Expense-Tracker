@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <Shell
     x:Class="ExpenseTracker.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -7,46 +7,41 @@
     Shell.FlyoutBehavior="Disabled"
     Title="ExpenseTracker">
 
-	<!-- Tab Bar -->
-	<TabBar>
-
-		<!-- Home Tab -->
-		<ShellContent
+    <!-- Tab Bar -->
+    <TabBar>
+        <!-- Home Tab -->
+        <ShellContent
             Title="Home"
             Icon="home_icon.png"
             ContentTemplate="{DataTemplate local:MainPage}"
             Route="MainPage" />
 
-		<!-- Add Expense Tab -->
-		<ShellContent
+        <!-- Add Expense Tab -->
+        <ShellContent
             Title="Add Expense"
             Icon="add_icon.png"
             ContentTemplate="{DataTemplate local:AddExpense}"
             Route="AddExpense" />
 
-		<!-- History Tab -->
-		<ShellContent
+        <!-- History Tab -->
+        <ShellContent
             Title="History"
             Icon="history_icon.png"
             ContentTemplate="{DataTemplate local:History}"
             Route="History" />
 
-		<!-- Reports Tab -->
-		<ShellContent
+        <!-- Reports Tab -->
+        <ShellContent
             Title="Reports"
             Icon="report_icon.png"
             ContentTemplate="{DataTemplate local:Reports}"
             Route="Reports" />
+    </TabBar>
 
-		<!-- Settings Tab -->
-		<ShellContent
-            Title="Settings"
-            Icon="settings_icon.png"
-            ContentTemplate="{DataTemplate local:Settings}"
-            Route="Settings" />
-
-	</TabBar>
-
+    <!-- Settings is not separated -->
+    <ShellContent
+        Title="Settings"
+        Icon="settings_icon.png"
+        ContentTemplate="{DataTemplate local:Settings}"
+        Route="Settings" />
 </Shell>
-
-

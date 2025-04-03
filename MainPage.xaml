@@ -1,23 +1,25 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:microcharts="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
              x:Class="ExpenseTracker.MainPage">
-    <Grid RowDefinitions="Auto, *, Auto">
+    <Grid>
         <!-- Header Section -->
-        <Grid Grid.Row="0" Padding="15" BackgroundColor="White">
-            <Grid ColumnDefinitions="*, Auto" Margin="0,0,0,15">
+        <Grid Padding="15" BackgroundColor="White">
+            <Grid ColumnDefinitions="Auto, *" Margin="0,0,0,15">
                 <!-- Title -->
-                <Label Text="Expense Tracker"
-                       FontSize="24"
+                <Label Text="Latest Expenses"
+                       FontSize="36"
                        HorizontalOptions="Center"
                        VerticalOptions="Center"
+                       TextColor="Black"
                        Grid.Column="0" />
+
                 <!-- Settings Button -->
                 <ImageButton Source="settings_icon.png"
                              WidthRequest="30"
                              HeightRequest="30"
-                             BackgroundColor="Transparent"
+                             BackgroundColor="White"
                              Clicked="OnSettingsClicked"
                              HorizontalOptions="End"
                              VerticalOptions="Center"
@@ -26,30 +28,18 @@
         </Grid>
 
         <!-- Main Content Area -->
-        <ScrollView Grid.Row="1">
+        <ScrollView BackgroundColor="White">
             <VerticalStackLayout Padding="10">
                 <Label Text="Analytics Graph"
+                       FontSize="24"
+                       TextColor="Black"
                        HorizontalOptions="Center"
                        VerticalOptions="Center" />
                 <ContentView>
-                    <!-- Our Graph will be displayed here -->
                     <microcharts:ChartView x:Name="CurrentExpensesChartView"
-                                           HeightRequest="300" />
+                                           HeightRequest="400" />
                 </ContentView>
-                <!-- Additional content placeholder can be added here -->
             </VerticalStackLayout>
         </ScrollView>
-
-        <!-- Footer Navigation Bar (commented out, if not needed) -->
-        <!--
-        <Grid Grid.Row="2" BackgroundColor="LightGray">
-            <HorizontalStackLayout HorizontalOptions="Center" Spacing="30">
-                <Button Text="Add" Command="{Binding GoToAddExpense}" />
-                <Button Text="History" Command="{Binding GoToHistory}" />
-                <Button Text="Report" Command="{Binding GoToReport}" />
-                <Button Text="Settings" Command="{Binding GoToSettings}" />
-            </HorizontalStackLayout>
-        </Grid>
-        -->
     </Grid>
 </ContentPage>
