@@ -1,62 +1,82 @@
-
+using Microsoft.Maui.Controls;
 using System.IO;
 
 namespace ExpenseTracker;
 
 public partial class Settings : ContentPage
 {
+    private const string FilePath = "settings.txt";
+    private bool isDarkMode;
+    private string language = "en"; // Default language
+    private bool notificationsEnabled; // Default notification preference
 
     public Settings()
     {
         InitializeComponent();
         LoadSettings();
         UpdateTheme();
+        //UpdateLanguage();
     }
 
-    private const string FilePath = "settings.txt";
-
-        private bool isDarkMode;
-
-    public Settings(bool isDarkMode)
+    public bool IsNotificationsEnabled
     {
-        this.isDarkMode = isDarkMode;
-        InitializeComponent();
-        LoadSettings();
-        UpdateTheme();
+        get { return notificationsEnabled; }
+        set
+        {
+            notificationsEnabled = value;
+            SaveSettings();
+        }
     }
 
     public bool IsDarkMode
+    {
+        get { return isDarkMode; }
+        set
         {
-            get { return isDarkMode; } 
-            set
-            {
-                isDarkMode = value;
-                SaveSettings(); 
-            }
+            isDarkMode = value;
+            SaveSettings();
+            UpdateTheme();
         }
+    }
 
-
-
+    public string Language
+    {
+        get { return language; }
+        set
+        {
+            language = value;
+            SaveSettings();
+            UpdateLanguage();
+        }
+    }
 
     private void IsDarkModeEnabled(object sender, ToggledEventArgs e)
     {
         this.IsDarkMode = e.Value;
-        UpdateTheme();
-        SaveSettings();
+    }
+
+    private void OnLanguageSelected(object sender, EventArgs e)
+    {
+        var selectedLanguage = (sender as Picker).SelectedItem.ToString();
+        this.Language = selectedLanguage;
     }
 
     private void UpdateTheme()
     {
         if (IsDarkMode)
         {
-            Application.Current.Resources["AppBackgroundColor"] = Color.FromHex("#4CAF50");
+            Application.Current.Resources["AppBackgroundColor"] = Color.FromArgb("#4CAF50");
         }
         else
         {
-            Application.Current.Resources["AppBackgroundColor"] = Color.FromHex("#FFFFFF");
+            Application.Current.Resources["AppBackgroundColor"] = Color.FromArgb("#FFFFFF");
         }
     }
 
+    private void UpdateLanguage()
+    {
+
+    }
 
     private void LoadSettings()
     {
@@ -65,12 +85,25 @@ public partial class Settings : ContentPage
 
         if (File.Exists(filePath))
         {
-            var fileContent = File.ReadAllText(filePath);
-            bool.TryParse(fileContent, out isDarkMode); 
+            var fileContent = File.ReadAllLines(filePath);
+            if (fileContent.Length > 0)
+            {
+                bool.TryParse(fileContent[0], out isDarkMode);
+            }
+            if (fileContent.Length > 1)
+            {
+                language = fileContent[1];
+            }
+            if (fileContent.Length > 2)
+            {
+                bool.TryParse(fileContent[2], out notificationsEnabled);
+            }
         }
         else
         {
-            isDarkMode = false; 
+            isDarkMode = false;
+            language = "en";
+            IsNotificationsEnabled = true; // Default notification preference
         }
     }
 
@@ -79,8 +112,15 @@ public partial class Settings : ContentPage
         var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
         var filePath = Path.Combine(folderPath, FilePath);
 
-        File.WriteAllText(filePath, isDarkMode.ToString());
+        var settings = new string[] { isDarkMode.ToString(), language, notificationsEnabled.ToString() };
+        File.WriteAllLines(filePath, settings);
     }
 
+    private void OnNotificationsToggled(object sender, ToggledEventArgs e)
+    {
+        // Handle notifications toggle
+        bool isEnabled = e.Value;
+        // Save the notification preference
+        IsNotificationsEnabled = isEnabled;
+    }
 }
-

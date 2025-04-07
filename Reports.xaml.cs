@@ -1,29 +1,96 @@
+using Microcharts;
+using SkiaSharp;
+using System.Globalization;
+
 namespace ExpenseTracker;
 
 public partial class Reports : ContentPage
 {
-	public Reports()
-	{
-		InitializeComponent();
-	}
 
+    public static decimal MonthlyBudget { get; set; } 
 
-    public class Expense
+    public string MonthlyBudgetEntryText
     {
-        public string Month { get; set; }
-        public float Amount { get; set; }
+        get => MonthlyBudgetEntry.Text;
+        set => MonthlyBudgetEntry.Text = value;
     }
 
-    public static List<Expense> CurrentExpenses()
+    public Reports()
+	{
+		InitializeComponent();
+        LoadCharts();
+
+    }
+
+    private void MonthlyBudgetEntry_BindingContextChanged(object sender, EventArgs e)
     {
-        // DUMMY DATA FOR TESTING
-        return new List<Expense>
+        ValidateMonthlyBudget();
+
+
+    }
+
+
+    private void ValidateMonthlyBudget()
+    {
+        var monthlyBudget = MonthlyBudgetEntry.Text;
+
+        if (string.IsNullOrEmpty(monthlyBudget))
         {
-            new Expense { Month = "January", Amount = 200 },
-            new Expense { Month = "February", Amount = 400 },
-            new Expense { Month = "March", Amount = 150 },
-            new Expense { Month = "April", Amount = 300 }
-        };
+            MonthlyBudgetEntry.TextColor = Colors.Red;
+            MonthlyBudgetEntry.Placeholder = "Please enter a valid budget";
+        }
+        else if (!decimal.TryParse(monthlyBudget, NumberStyles.Number, CultureInfo.CurrentCulture, out decimal budget))
+        {
+            MonthlyBudgetEntry.TextColor = Colors.Red;
+            MonthlyBudgetEntry.Placeholder = "Invalid number format";
+        }
+        else if (budget < 0)
+        {
+            MonthlyBudgetEntry.TextColor = Colors.Red;
+            MonthlyBudgetEntry.Placeholder = "Budget cannot be negative";
+        }
+        else if (monthlyBudget.Length > 10)
+        {
+            MonthlyBudgetEntry.TextColor = Colors.Red;
+            MonthlyBudgetEntry.Placeholder = "Budget too long";
+        }
+        else
+        {
+            MonthlyBudgetEntry.TextColor = Colors.Black;
+            MonthlyBudgetEntry.Placeholder = "Enter your monthly budget";
+        }
+    }
+
+    public string returnMonthlyBudget()
+    {
+        return MonthlyBudgetEntry.Text;
+    }
+
+    private void LoadCharts()
+    {
+        var expenses = Expense.CurrentExpenses(); 
+
+        var categorySums = expenses
+            .Where(e => !string.IsNullOrEmpty(e.Category))
+            .GroupBy(e => e.Category)
+            .Select(g => new { Category = g.Key, Total = g.Sum(e => e.Amount) })
+            .ToList();
+
+        var entries = categorySums.Select(g => new ChartEntry((float)g.Total)
+        {
+            Label = g.Category,
+            ValueLabel = $"${g.Total}",
+            Color = SKColor.Parse(GetRandomColor())
+        }).ToList();
+
+        PieChartView.Chart = new PieChart { Entries = entries };
+        BarChartView.Chart = new BarChart { Entries = entries };
+    }
+
+    private string GetRandomColor()
+    {
+        var random = new Random();
+        return $"#{random.Next(0x1000000):X6}"; //  random hex color
     }
 }
 

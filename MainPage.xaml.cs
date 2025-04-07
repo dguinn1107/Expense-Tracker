@@ -17,7 +17,7 @@ namespace ExpenseTracker
             InitializeComponent();
 
             // Fetch dummy data
-            var data = Reports.CurrentExpenses();
+            var data = Expense.CurrentExpenses();
 
             // Convert dummy data to Microcharts entries
             var chartEntries = data.Select(expense => new Microcharts.ChartEntry(expense.Amount)

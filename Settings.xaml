@@ -3,8 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ExpenseTracker.Settings"
              Title="Settings"
-             BackgroundColor="{DynamicResource AppBackgroundColor}">
-    
+             BackgroundColor="{DynamicResource AppBackgroundColor}"
+             >
+   
+
+
     <VerticalStackLayout>
         <Label 
             Text="Customize Your Settings"
@@ -14,6 +17,8 @@
             Text="Green Mode"
             HorizontalOptions="Start"
             VerticalOptions="Center"/>
+        
+        
 
 
         <Switch x:Name="DarkModeSwitch" 
@@ -25,6 +30,26 @@
                ThumbColor="White"
                
                AutomationId="DarkModeSwitch" />
+
+        <Picker x:Name="LanguagePicker" Title="Select Language" SelectedIndexChanged="OnLanguageSelected">
+            <Picker.Items>
+                <x:String>en</x:String>
+                <x:String>es</x:String>
+            </Picker.Items>
+        </Picker>
+
+        <Switch x:Name="NotificationsSwitch" 
+               IsToggled="{Binding isNotificationsEnabled}" 
+               Toggled="OnNotificationsToggled" 
+               HorizontalOptions="Start" 
+               VerticalOptions="Center" 
+               OnColor="Green"
+               ThumbColor="White"
+               
+               AutomationId="NotificationsSwitch" />
+        
+
+
 
         <!--<Button 
             Text="Reset Data" 
