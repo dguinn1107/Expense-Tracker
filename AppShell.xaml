@@ -23,12 +23,12 @@
             ContentTemplate="{DataTemplate local:AddExpense}"
             Route="AddExpense" />
 
-        <!-- History Tab -->
+        <!-- History Tab 
         <ShellContent
             Title="History"
             Icon="history_icon.png"
             ContentTemplate="{DataTemplate local:History}"
-            Route="History" />
+            Route="History" /> -->
 
         <!-- Reports Tab -->
         <ShellContent
@@ -36,12 +36,11 @@
             Icon="report_icon.png"
             ContentTemplate="{DataTemplate local:Reports}"
             Route="Reports" />
-    </TabBar>
 
-    <!-- Settings is not separated -->
-    <ShellContent
-        Title="Settings"
-        Icon="settings_icon.png"
-        ContentTemplate="{DataTemplate local:Settings}"
-        Route="Settings" />
+        <ShellContent
+            Title="Settings"
+            Icon="settings_icon.png"
+            ContentTemplate="{DataTemplate local:Settings}"
+            Route="Settings" />
+    </TabBar>
 </Shell>
