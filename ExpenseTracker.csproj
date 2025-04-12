@@ -77,6 +77,9 @@
 	  <MauiXaml Update="AddExpense.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="AddExpenseItem.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="History.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
