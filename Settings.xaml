@@ -14,11 +14,11 @@
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
         <Label 
-            Text="Green Mode"
+            Text="Dark Mode"
             HorizontalOptions="Start"
             VerticalOptions="Center"/>
-        
-        
+
+
 
 
         <Switch x:Name="DarkModeSwitch" 

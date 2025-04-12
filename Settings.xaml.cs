@@ -1,18 +1,25 @@
-using Microsoft.Maui.Controls;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
+using System.Text.Json;
+using Microsoft.Maui.Controls;
 
 namespace ExpenseTracker;
 
-public partial class Settings : ContentPage
+public partial class Settings : ContentPage, INotifyPropertyChanged
 {
-    private const string FilePath = "settings.txt";
+    private const string FilePath = "settings.json";
     private bool isDarkMode;
     private string language = "en"; // Default language
     private bool notificationsEnabled; // Default notification preference
 
+    public event PropertyChangedEventHandler PropertyChanged;
+
     public Settings()
     {
         InitializeComponent();
+        BindingContext = this;  // Set the BindingContext for data binding.
         LoadSettings();
         UpdateTheme();
         //UpdateLanguage();
@@ -20,52 +27,66 @@ public partial class Settings : ContentPage
 
     public bool IsNotificationsEnabled
     {
-        get { return notificationsEnabled; }
+        get => notificationsEnabled;
         set
         {
-            notificationsEnabled = value;
-            SaveSettings();
+            if (notificationsEnabled != value)
+            {
+                notificationsEnabled = value;
+                OnPropertyChanged(nameof(IsNotificationsEnabled));
+                SaveSettings();
+            }
         }
     }
 
     public bool IsDarkMode
     {
-        get { return isDarkMode; }
+        get => isDarkMode;
         set
         {
-            isDarkMode = value;
-            SaveSettings();
-            UpdateTheme();
+            if (isDarkMode != value)
+            {
+                isDarkMode = value;
+                OnPropertyChanged(nameof(IsDarkMode));
+                SaveSettings();
+                UpdateTheme();
+            }
         }
     }
 
     public string Language
     {
-        get { return language; }
+        get => language;
         set
         {
-            language = value;
-            SaveSettings();
-            UpdateLanguage();
+            if (language != value)
+            {
+                language = value;
+                OnPropertyChanged(nameof(Language));
+                SaveSettings();
+                UpdateLanguage();
+            }
         }
     }
 
     private void IsDarkModeEnabled(object sender, ToggledEventArgs e)
     {
-        this.IsDarkMode = e.Value;
+        IsDarkMode = e.Value;
     }
 
     private void OnLanguageSelected(object sender, EventArgs e)
     {
-        var selectedLanguage = (sender as Picker).SelectedItem.ToString();
-        this.Language = selectedLanguage;
+        if (sender is Picker picker && picker.SelectedItem is string selectedLanguage)
+        {
+            Language = selectedLanguage;
+        }
     }
 
     private void UpdateTheme()
     {
         if (IsDarkMode)
         {
-            Application.Current.Resources["AppBackgroundColor"] = Color.FromArgb("#4CAF50");
+            Application.Current.Resources["AppBackgroundColor"] = Color.FromArgb("#DDE6F1");
         }
         else
         {
@@ -75,52 +96,75 @@ public partial class Settings : ContentPage
 
     private void UpdateLanguage()
     {
-
+        // Implement your language update logic here
     }
 
-    private void LoadSettings()
+    public void LoadSettings()
     {
         var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-        var filePath = Path.Combine(folderPath, FilePath);
+        var fullPath = Path.Combine(folderPath, FilePath);
 
-        if (File.Exists(filePath))
+        if (File.Exists(fullPath))
         {
-            var fileContent = File.ReadAllLines(filePath);
-            if (fileContent.Length > 0)
+            try
             {
-                bool.TryParse(fileContent[0], out isDarkMode);
+                string json = File.ReadAllText(fullPath);
+                var settingsDict = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
+                if (settingsDict != null)
+                {
+                    if (settingsDict.TryGetValue("IsDarkMode", out string darkModeValue))
+                        bool.TryParse(darkModeValue, out isDarkMode);
+                    if (settingsDict.TryGetValue("Language", out string lang))
+                        language = lang;
+                    if (settingsDict.TryGetValue("NotificationsEnabled", out string notifValue))
+                        bool.TryParse(notifValue, out notificationsEnabled);
+
+                    // After loading, notify the UI that properties have changed.
+                    OnPropertyChanged(nameof(IsDarkMode));
+                    OnPropertyChanged(nameof(Language));
+                    OnPropertyChanged(nameof(IsNotificationsEnabled));
+                }
             }
-            if (fileContent.Length > 1)
+            catch
             {
-                language = fileContent[1];
-            }
-            if (fileContent.Length > 2)
-            {
-                bool.TryParse(fileContent[2], out notificationsEnabled);
+                // If deserialization fails, keep defaults.
+                isDarkMode = false;
+                language = "en";
+                notificationsEnabled = true;
             }
         }
         else
         {
+            // Set default settings if file doesn't exist.
             isDarkMode = false;
             language = "en";
-            IsNotificationsEnabled = true; // Default notification preference
+            notificationsEnabled = true;
         }
     }
 
-    private void SaveSettings()
+    public void SaveSettings()
     {
         var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-        var filePath = Path.Combine(folderPath, FilePath);
+        var fullPath = Path.Combine(folderPath, FilePath);
 
-        var settings = new string[] { isDarkMode.ToString(), language, notificationsEnabled.ToString() };
-        File.WriteAllLines(filePath, settings);
+        var settingsDict = new Dictionary<string, string>
+        {
+            { "IsDarkMode", isDarkMode.ToString() },
+            { "Language", language },
+            { "NotificationsEnabled", notificationsEnabled.ToString() }
+        };
+
+        string json = JsonSerializer.Serialize(settingsDict);
+        File.WriteAllText(fullPath, json);
     }
 
     private void OnNotificationsToggled(object sender, ToggledEventArgs e)
     {
-        // Handle notifications toggle
-        bool isEnabled = e.Value;
-        // Save the notification preference
-        IsNotificationsEnabled = isEnabled;
+        IsNotificationsEnabled = e.Value;
+    }
+
+    protected virtual void OnPropertyChanged(string propertyName)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

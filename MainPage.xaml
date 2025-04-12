@@ -4,7 +4,9 @@
              xmlns:microcharts="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
              x:Class="ExpenseTracker.MainPage">
     <Grid RowDefinitions="Auto, *, Auto"
-          BackgroundColor="{DynamicResource AppBackgroundColor}">
+          BackgroundColor="{DynamicResource AppBackgroundColor}"
+          
+         >
         
         <!-- Header Section -->
         <Grid Padding="15" BackgroundColor="Transparent">
@@ -39,8 +41,10 @@
                        HorizontalOptions="Center"
                        VerticalOptions="Center" />
                 <ContentView>
-                    <microcharts:ChartView x:Name="CurrentExpensesChartView"
-                                           HeightRequest="400" />
+                    <microcharts:ChartView x:Name="DisplayChart"
+                                           HeightRequest="200"
+                                           
+                                           />
                 </ContentView>
             </VerticalStackLayout>
         </ScrollView>

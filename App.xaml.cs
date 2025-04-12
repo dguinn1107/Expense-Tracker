@@ -6,6 +6,10 @@
         {
             InitializeComponent();
 
+
+            var Settings = new Settings();
+            Settings.LoadSettings();
+
             MainPage = new AppShell();
         }
     }

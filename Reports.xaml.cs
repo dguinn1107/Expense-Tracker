@@ -7,7 +7,7 @@ namespace ExpenseTracker;
 public partial class Reports : ContentPage
 {
 
-    public static decimal MonthlyBudget { get; set; } 
+    public static decimal MonthlyBudget { get; set; }
 
     public string MonthlyBudgetEntryText
     {
@@ -66,7 +66,7 @@ public partial class Reports : ContentPage
         return MonthlyBudgetEntry.Text;
     }
 
-    private void LoadCharts()
+    public void LoadCharts()
     {
         var expenses = Expense.CurrentExpenses(); 
 
@@ -85,8 +85,99 @@ public partial class Reports : ContentPage
 
         PieChartView.Chart = new PieChart { Entries = entries };
         BarChartView.Chart = new BarChart { Entries = entries };
+        LineChartView.Chart = new LineChart { Entries = entries };
+        DonutChart.Chart = new DonutChart { Entries = entries };
+        RadarChartView.Chart = new RadarChart { Entries = entries };
+
     }
 
+    public Chart pieChart()
+    {
+        var expenses = Expense.CurrentExpenses();
+
+        var categorySums = expenses
+            .Where(e => !string.IsNullOrEmpty(e.Category))
+            .GroupBy(e => e.Category)
+            .Select(g => new { Category = g.Key, Total = g.Sum(e => e.Amount) })
+            .ToList();
+
+        var entries = categorySums.Select(g => new ChartEntry((float)g.Total)
+        {
+            Label = g.Category,
+            ValueLabel = $"${g.Total}",
+            Color = SKColor.Parse(GetRandomColor())
+        }).ToList();
+
+        return PieChartView.Chart = new PieChart { Entries = entries };
+    }
+
+    public Chart barChart()
+    {
+        var expenses = Expense.CurrentExpenses();
+
+        var categorySums = expenses
+            .Where(e => !string.IsNullOrEmpty(e.Category))
+            .GroupBy(e => e.Category)
+            .Select(g => new { Category = g.Key, Total = g.Sum(e => e.Amount) })
+            .ToList();
+
+        var entries = categorySums.Select(g => new ChartEntry((float)g.Total)
+        {
+            Label = g.Category,
+            ValueLabel = $"${g.Total}",
+            Color = SKColor.Parse(GetRandomColor())
+        }).ToList();
+
+        return BarChartView.Chart = new BarChart { Entries = entries };
+    }
+    public Chart lineChart()
+    {
+        var expenses = Expense.CurrentExpenses();
+        var categorySums = expenses
+            .Where(e => !string.IsNullOrEmpty(e.Category))
+            .GroupBy(e => e.Category)
+            .Select(g => new { Category = g.Key, Total = g.Sum(e => e.Amount) })
+            .ToList();
+        var entries = categorySums.Select(g => new ChartEntry((float)g.Total)
+        {
+            Label = g.Category,
+            ValueLabel = $"${g.Total}",
+            Color = SKColor.Parse(GetRandomColor())
+        }).ToList();
+        return LineChartView.Chart = new LineChart { Entries = entries };
+    }
+    public Chart donutChart()
+    {
+        var expenses = Expense.CurrentExpenses();
+        var categorySums = expenses
+            .Where(e => !string.IsNullOrEmpty(e.Category))
+            .GroupBy(e => e.Category)
+            .Select(g => new { Category = g.Key, Total = g.Sum(e => e.Amount) })
+            .ToList();
+        var entries = categorySums.Select(g => new ChartEntry((float)g.Total)
+        {
+            Label = g.Category,
+            ValueLabel = $"${g.Total}",
+            Color = SKColor.Parse(GetRandomColor())
+        }).ToList();
+        return DonutChart.Chart = new DonutChart { Entries = entries };
+    }
+    public Chart radarChart()
+    {
+        var expenses = Expense.CurrentExpenses();
+        var categorySums = expenses
+            .Where(e => !string.IsNullOrEmpty(e.Category))
+            .GroupBy(e => e.Category)
+            .Select(g => new { Category = g.Key, Total = g.Sum(e => e.Amount) })
+            .ToList();
+        var entries = categorySums.Select(g => new ChartEntry((float)g.Total)
+        {
+            Label = g.Category,
+            ValueLabel = $"${g.Total}",
+            Color = SKColor.Parse(GetRandomColor())
+        }).ToList();
+        return RadarChartView.Chart = new RadarChart { Entries = entries };
+    }
     private string GetRandomColor()
     {
         var random = new Random();
