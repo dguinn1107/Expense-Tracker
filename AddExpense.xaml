@@ -11,11 +11,31 @@
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
        
-        <Button x:Name="AddExpenseButton"
+       <!-- <Button x:Name="AddExpenseButton"
             Text="Create New Expense"
             BackgroundColor="DarkGreen"
             Clicked="OnAddExpenseClicked"
             VerticalOptions="Center" 
-            HorizontalOptions="Start" />
+            HorizontalOptions="Start" 
+        !! Commented your button out in case it is to be used !!
+        /> -->
+
+        <CollectionView x:Name="TransactionList"
+                ItemsSource="{Binding transactions}"
+                HeightRequest="300">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Label Text="{Binding .}" 
+                    Padding="10"
+                    FontSize="16"
+                    LineBreakMode="WordWrap"/> <!-- the . binds the whole csv string to label -->
+                    
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button Text="Add Expense"
+        Clicked="OnAddExpenseClicked"/>
+        
     </VerticalStackLayout>
 </ContentPage>

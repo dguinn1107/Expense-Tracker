@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ExpenseTracker.AddExpenseItem"
+             Title="AddExpenseItem">
+    <VerticalStackLayout>
+        <Label Text="Add Expense"
+       FontSize="20"
+       HorizontalOptions="Center"/>
+
+        <Picker x:Name="ExpenseTypePicker"
+Title="Select Expense Type"
+ItemsSource="{Binding ExpenseTypes}"
+SelectedItem="{Binding SelectedExpenseType}"/>
+
+        <Entry x:Name="ExpenseAmount"
+       Placeholder="Amount" 
+        Text="{Binding ExpenseAmount, Mode=TwoWay}"
+       Keyboard="Numeric"/>
+
+        <DatePicker x:Name="ExpenseDatePicker"
+         Format="D"
+         Date="{Binding SelectedDate, Mode=TwoWay}"/>
+
+        <HorizontalStackLayout HorizontalOptions="Center">
+            <Button Text="Save" Clicked="OnSaveExpense"/>
+            <Button Text="Cancel" Clicked="OnCancel"/>
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>
