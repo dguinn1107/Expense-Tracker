@@ -7,6 +7,7 @@ namespace ExpenseTracker;
 // Move the initialization of 'userExpenses' to the constructor, as field initializers cannot reference instance members.
 public partial class Reports : ContentPage
 {
+
     public static decimal MonthlyBudget { get; set; }
 
     //public AddExpense additem = new AddExpense();
@@ -68,10 +69,9 @@ public partial class Reports : ContentPage
         return MonthlyBudgetEntry.Text;
     }
 
-    public void LoadCharts()
+    private void LoadCharts()
     {
-
-        var expenses = Expense.CurrentExpenses();
+        var expenses = Expense.CurrentExpenses(); 
 
 
         var categorySums = expenses
@@ -92,15 +92,49 @@ public partial class Reports : ContentPage
         LineChartView.Chart = new LineChart { Entries = entries };
         DonutChart.Chart = new DonutChart { Entries = entries };
         RadarChartView.Chart = new RadarChart { Entries = entries };
+
     }
 
-    private string GetRandomColor()
+    public Chart pieChart()
     {
-        var random = new Random();
-        return $"#{random.Next(0x1000000):X6}"; // random hex color
+        var expenses = Expense.CurrentExpenses();
+
+        var categorySums = expenses
+            .Where(e => !string.IsNullOrEmpty(e.Category))
+            .GroupBy(e => e.Category)
+            .Select(g => new { Category = g.Key, Total = g.Sum(e => e.Amount) })
+            .ToList();
+
+        var entries = categorySums.Select(g => new ChartEntry((float)g.Total)
+        {
+            Label = g.Category,
+            ValueLabel = $"${g.Total}",
+            Color = SKColor.Parse(GetRandomColor())
+        }).ToList();
+
+        return PieChartView.Chart = new PieChart { Entries = entries };
     }
 
-    public PieChart pieChart()
+    public Chart barChart()
+    {
+        var expenses = Expense.CurrentExpenses();
+
+        var categorySums = expenses
+            .Where(e => !string.IsNullOrEmpty(e.Category))
+            .GroupBy(e => e.Category)
+            .Select(g => new { Category = g.Key, Total = g.Sum(e => e.Amount) })
+            .ToList();
+
+        var entries = categorySums.Select(g => new ChartEntry((float)g.Total)
+        {
+            Label = g.Category,
+            ValueLabel = $"${g.Total}",
+            Color = SKColor.Parse(GetRandomColor())
+        }).ToList();
+
+        return BarChartView.Chart = new BarChart { Entries = entries };
+    }
+    public Chart lineChart()
     {
         var expenses = Expense.CurrentExpenses();
         var categorySums = expenses
@@ -114,10 +148,46 @@ public partial class Reports : ContentPage
             ValueLabel = $"${g.Total}",
             Color = SKColor.Parse(GetRandomColor())
         }).ToList();
-
-        var pieChart = new PieChart { Entries = entries }; // Create a new PieChart instance
-        PieChartView.Chart = pieChart; // Assign it to the PieChartView.Chart property
-        return pieChart; // Return the created PieChart instance
+        return LineChartView.Chart = new LineChart { Entries = entries };
     }
+    public Chart donutChart()
+    {
+        var expenses = Expense.CurrentExpenses();
+        var categorySums = expenses
+            .Where(e => !string.IsNullOrEmpty(e.Category))
+            .GroupBy(e => e.Category)
+            .Select(g => new { Category = g.Key, Total = g.Sum(e => e.Amount) })
+            .ToList();
+        var entries = categorySums.Select(g => new ChartEntry((float)g.Total)
+        {
+            Label = g.Category,
+            ValueLabel = $"${g.Total}",
+            Color = SKColor.Parse(GetRandomColor())
+        }).ToList();
+        return DonutChart.Chart = new DonutChart { Entries = entries };
+    }
+    public Chart radarChart()
+    {
+        var expenses = Expense.CurrentExpenses();
+        var categorySums = expenses
+            .Where(e => !string.IsNullOrEmpty(e.Category))
+            .GroupBy(e => e.Category)
+            .Select(g => new { Category = g.Key, Total = g.Sum(e => e.Amount) })
+            .ToList();
+        var entries = categorySums.Select(g => new ChartEntry((float)g.Total)
+        {
+            Label = g.Category,
+            ValueLabel = $"${g.Total}",
+            Color = SKColor.Parse(GetRandomColor())
+        }).ToList();
+        return RadarChartView.Chart = new RadarChart { Entries = entries };
+    }
+    private string GetRandomColor()
+    {
+        var random = new Random();
+        return $"#{random.Next(0x1000000):X6}"; //  random hex color
+    }
+
+
 }
 
