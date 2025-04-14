@@ -37,6 +37,9 @@ public partial class AddExpenseItem : ContentPage
 
     }
 
+
+
+
     private async void OnSaveExpense(object sender, EventArgs e) //saving properties
     {
         var viewModel = (AddExpenseItemViewModel)BindingContext;
