@@ -87,10 +87,13 @@ public partial class Settings : ContentPage, INotifyPropertyChanged
         if (IsDarkMode)
         {
             Application.Current.Resources["AppBackgroundColor"] = Color.FromArgb("#DDE6F1");
+            Application.Current.Resources["AppTextColor"] = Color.FromArgb("#000000"); // Black text for better contrast
         }
         else
         {
             Application.Current.Resources["AppBackgroundColor"] = Color.FromArgb("#FFFFFF");
+            Application.Current.Resources["AppTextColor"] = Color.FromArgb("#333333"); // Dark gray text
+
         }
     }
 

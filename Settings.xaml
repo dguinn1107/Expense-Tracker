@@ -26,7 +26,7 @@
                Toggled="IsDarkModeEnabled" 
                HorizontalOptions="Start" 
                VerticalOptions="Center" 
-               OnColor="Green"
+               OnColor="Black"
                ThumbColor="White"
                
                AutomationId="DarkModeSwitch" />
@@ -43,7 +43,7 @@
                Toggled="OnNotificationsToggled" 
                HorizontalOptions="Start" 
                VerticalOptions="Center" 
-               OnColor="Green"
+               OnColor="Black"
                ThumbColor="White"
                
                AutomationId="NotificationsSwitch" />
