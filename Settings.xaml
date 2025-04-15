@@ -1,59 +1,34 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ExpenseTracker.Settings"
-             Title="Settings"
-             BackgroundColor="{DynamicResource AppBackgroundColor}"
-             >
-   
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="ExpenseTracker.Settings"
+    Title="Settings">
 
+    <!--<ContentPage.BindingContext>
+        <viewmodels:SettingsViewModel />
+    </ContentPage.BindingContext>-->
 
-    <VerticalStackLayout>
+    <StackLayout Padding="20" Spacing="20">
+
+        <Label Text="Monthly Budget:" />
+        <Entry 
+            x:Name="MonthlyBudgetEntry"
+            Keyboard="Numeric"
+            Text="{Binding MonthlyBudget}" 
+            Placeholder="Enter your monthly budget" />
+
         <Label 
-            Text="Customize Your Settings"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-        <Label 
-            Text="Dark Mode"
-            HorizontalOptions="Start"
-            VerticalOptions="Center"/>
+            Text="{Binding MonthlyBudgetError}" 
+            TextColor="Red" 
+            IsVisible="{Binding HasError}" />
 
+        <Label Text="Dark Mode:" />
+        <Switch 
+            IsToggled="{Binding IsDarkMode}" />
 
-
-
-        <Switch x:Name="DarkModeSwitch" 
-               IsToggled="{Binding IsDarkMode}" 
-               Toggled="IsDarkModeEnabled" 
-               HorizontalOptions="Start" 
-               VerticalOptions="Center" 
-               OnColor="Green"
-               ThumbColor="White"
-               
-               AutomationId="DarkModeSwitch" />
-
-        <Picker x:Name="LanguagePicker" Title="Select Language" SelectedIndexChanged="OnLanguageSelected">
-            <Picker.Items>
-                <x:String>en</x:String>
-                <x:String>es</x:String>
-            </Picker.Items>
-        </Picker>
-
-        <Switch x:Name="NotificationsSwitch" 
-               IsToggled="{Binding isNotificationsEnabled}" 
-               Toggled="OnNotificationsToggled" 
-               HorizontalOptions="Start" 
-               VerticalOptions="Center" 
-               OnColor="Green"
-               ThumbColor="White"
-               
-               AutomationId="NotificationsSwitch" />
-        
-
-
-
-        <StackLayout Orientation="Horizontal" VerticalOptions="Center">
-            <Label Text="Notifications" VerticalOptions="Center" />
-            <Switch IsToggled="{Binding NotificationsEnabled}" />
-        </StackLayout>
+        <Button 
+            Text="Save Settings" 
+            Command="{Binding SaveCommand}" />
     </StackLayout>
+
 </ContentPage>
