@@ -50,40 +50,50 @@ namespace ExpenseTracker
         }
         //public
 
-        public static List<Expense> CurrentExpenses() //**will simply re-use this method since it seems to be same**
-                                                      //functionality but now it will load data from csv not just establish data
+        public static List<Expense> CurrentExpenses()
         {
-            // var expenses = new List<Expense>(); //creates empty list
-            //var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData); //existing file will be stored in variable
-            //var filePath = Path.Combine(folderPath, "expenses.csv"); //
-            //
-            // if (!File.Exists(filePath)) return expenses; //returns an aempty list if file doesnt exist
+            var expenses = new List<Expense>(); // creates empty list
+            var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData); // existing file will be stored in variable
+            var filePath = System.IO.Path.Combine(folderPath, "expenses.csv");
 
-            //var lines = File.ReadAllLines(filePath).Skip(1); //read all lines except first as its a header
-            //foreach (var line in lines) // reusing the foreach from AddExpense.xaml.cs
-            //{
-            //var parts = line.Split(',');
+            if (!File.Exists(filePath)) return expenses; // returns an empty list if file doesn't exist
 
-            //if (parts.Length >= 3) 
-            //{
-            //var Category = parts[1]; // "type" was renamed Category(existing variable in this same cs page)
-            //var date = parts[2];
-            //var amount = parts[0];
-            //
-            //var entry = new Expense { Amount = (float)amount, Category = category }; //creates object
-            //expenses.Add(entry); // load csv regularly and adds object into expenses
-            //}
+            var lines = File.ReadAllLines(filePath).Skip(1); // read all lines except the first as it's a header
+            foreach (var line in lines) // reusing the foreach from AddExpense.xaml.cs
+            {
+                var parts = line.Split(',');
 
-
-            // DUMMY DATA FOR TESTING
-            return new List<Expense> //might have to change to "return expenses;" and delete code from below
+                if (parts.Length >= 3)
                 {
-                    new Expense { Month = "January", Amount = 200, Category = "Healthcare" },
-                    new Expense { Month = "February", Amount = 400, Category = "Other" },
-                    new Expense { Month = "Jnauary", Amount = 150, Category = "Transportation" },
-                    new Expense { Month = "April", Amount = 300 },
-                    new Expense { Month = "May", Amount = 500 , Category = "Food"}
-                };
+                    var category = parts[1]; // "type" was renamed Category (existing variable in this same cs page)
+                    var date = parts[2];
+                    var amount = parts[0];
+
+                    if (float.TryParse(amount, out float parsedAmount)) // safely parse the amount
+                    {
+                        var entry = new Expense { Amount = parsedAmount, Category = category }; // creates object
+                        expenses.Add(entry); // load csv regularly and adds object into expenses
+                    }
+                }
+            }
+
+            return expenses; // ensures all code paths return a value
+        }
+
+        public static float TotalAmountOfExpenses ()
+        {
+            var expenses = CurrentExpenses();
+            float totalAmount = expenses.Sum(e => e.Amount);
+            return totalAmount;
+        }
+
+        public static float ExceedsMonthlyBudget()
+        {
+            var settingsModel = new SettingsModel();
+
+            var expenses = CurrentExpenses();
+            float totalAmount = expenses.Sum(e => e.Amount);
+            return totalAmount - float.Parse(settingsModel.MonthlyBudget);
         }
     }
 }

@@ -24,16 +24,7 @@
                    Margin="10"
                    Grid.Row="0" />
 
-            <Entry Grid.Row="1"
-                   x:Name="MonthlyBudgetEntry"
-                   Placeholder="Enter Monthly Budget"
-                   TextColor="Black"
-                   BackgroundColor="White"
-                   BindingContextChanged="MonthlyBudgetEntry_BindingContextChanged"
-                   Keyboard="Numeric"
-                   VerticalOptions="Start"
-                   HorizontalOptions="FillAndExpand"
-                   Margin="10" />
+           
 
             <mc:ChartView x:Name="PieChartView"
                           Grid.Row="2"

@@ -1,65 +1,42 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ExpenseTracker.Settings"
-             Title="Settings"
-             BackgroundColor="{DynamicResource AppBackgroundColor}"
-             >
-   
-
-
-    <VerticalStackLayout>
-        <Label 
-            Text="Customize Your Settings"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-        <Label 
-            Text="Dark Mode"
-            HorizontalOptions="Start"
-            VerticalOptions="Center"/>
-
-
-
-
-        <Switch x:Name="DarkModeSwitch" 
-               IsToggled="{Binding IsDarkMode}" 
-               Toggled="IsDarkModeEnabled" 
-               HorizontalOptions="Start" 
-               VerticalOptions="Center" 
-               OnColor="Green"
-               ThumbColor="White"
-               
-               AutomationId="DarkModeSwitch" />
-
-        <Picker x:Name="LanguagePicker" Title="Select Language" SelectedIndexChanged="OnLanguageSelected">
-            <Picker.Items>
-                <x:String>en</x:String>
-                <x:String>es</x:String>
-            </Picker.Items>
-        </Picker>
-
-        <Switch x:Name="NotificationsSwitch" 
-               IsToggled="{Binding isNotificationsEnabled}" 
-               Toggled="OnNotificationsToggled" 
-               HorizontalOptions="Start" 
-               VerticalOptions="Center" 
-               OnColor="Green"
-               ThumbColor="White"
-               
-               AutomationId="NotificationsSwitch" />
+             x:Class ="ExpenseTracker.Settings"
+             Title="Settings">
+    
+    
+    <StackLayout Padding="20">
         
+        <Label Text="Monthly Budget:" />
+        
+        
+        <Entry 
+            x:Name="MonthlyBudgetEntry"
+            Keyboard="Numeric"
+            Text="{Binding MonthlyBudget}" Placeholder="Enter your monthly budget" />
+        
+        
+        <Label Text="{Binding MonthlyBudgetError}" TextColor="Red" />
 
+        <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+            <Label Text="Dark Mode" VerticalOptions="Center" />
+            <Switch IsToggled="{Binding IsDarkMode}" />
+        </StackLayout>
 
+        <!--<Label Text="Language:" />
+        <Picker Title="Language" SelectedItem="{Binding Language}">
+            <Picker.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>en</x:String>
+                    <x:String>es</x:String>
+                
+                </x:Array>
+            </Picker.ItemsSource>
+        </Picker>-->
 
-        <!--<Button 
-            Text="Reset Data" 
-            Clicked="OnResetDataClicked" 
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-        <Button 
-            Text="About" 
-            Clicked="OnAboutClicked" 
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />-->
-    </VerticalStackLayout>
+        <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+            <Label Text="Notifications" VerticalOptions="Center" />
+            <Switch IsToggled="{Binding NotificationsEnabled}" />
+        </StackLayout>
+    </StackLayout>
 </ContentPage>
