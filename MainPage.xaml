@@ -13,22 +13,11 @@
             <Grid ColumnDefinitions="Auto, *" Margin="0,0,0,15">
                 <!-- Title -->
                 <Label Text="Latest Expenses"
+                       TextColor="{DynamicResource AppTextColor}"
                        FontSize="36"
                        HorizontalOptions="Center"
                        VerticalOptions="Center"
-                       TextColor="Black"
                        Grid.Column="0" />
-
-                <!-- Settings Button 
-                <ImageButton Source="settings_icon.png"
-                             WidthRequest="30"
-                             HeightRequest="30"
-                             BackgroundColor="White"
-                             Clicked="OnSettingsClicked"
-                             HorizontalOptions="End"
-                             VerticalOptions="Center"
-                             Grid.Column="1" /> 
-                -->
             </Grid>
         </Grid>
 
@@ -37,7 +26,7 @@
             <VerticalStackLayout Padding="10">
                 <Label Text="Analytics Graph"
                        FontSize="24"
-                       TextColor="Black"
+                       TextColor="{DynamicResource AppTextColor}"
                        HorizontalOptions="Center"
                        VerticalOptions="Center" />
                 <ContentView>

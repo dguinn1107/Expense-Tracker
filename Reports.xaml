@@ -18,6 +18,7 @@
             </Grid.RowDefinitions>
 
             <Label Text="Reports"
+                   TextColor="{DynamicResource AppTextColor}"
                    FontSize="32"
                    HorizontalOptions="Center"
                    VerticalOptions="Start"

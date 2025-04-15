@@ -86,16 +86,16 @@ public partial class Settings : ContentPage, INotifyPropertyChanged
     {
         if (IsDarkMode)
         {
-            Application.Current.Resources["AppBackgroundColor"] = Color.FromArgb("#DDE6F1");
-            Application.Current.Resources["AppTextColor"] = Color.FromArgb("#000000"); // Black text for better contrast
+            Application.Current.Resources["AppBackgroundColor"] = Color.FromArgb("#000000");  // Dark mode background
+            Application.Current.Resources["AppTextColor"] = Color.FromArgb("#FFFFFF");        // White text for dark mode
         }
         else
         {
-            Application.Current.Resources["AppBackgroundColor"] = Color.FromArgb("#FFFFFF");
-            Application.Current.Resources["AppTextColor"] = Color.FromArgb("#333333"); // Dark gray text
-
+            Application.Current.Resources["AppBackgroundColor"] = Color.FromArgb("#FFFFFF");  // Light mode background
+            Application.Current.Resources["AppTextColor"] = Color.FromArgb("#000000");        // Black text for light mode
         }
     }
+
 
     private void UpdateLanguage()
     {
