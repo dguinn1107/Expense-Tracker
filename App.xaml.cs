@@ -6,9 +6,8 @@
         public App()
         {
             InitializeComponent();
-
-            var settingsModel = SettingsModel.LoadSettings();
-
+            var settings = new Settings();
+            settings.LoadSettings();
 
             MainPage = new AppShell();
         }
