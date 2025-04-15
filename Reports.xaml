@@ -18,6 +18,7 @@
             </Grid.RowDefinitions>
 
             <Label Text="Reports"
+                   TextColor="{DynamicResource AppTextColor}"
                    FontSize="32"
                    HorizontalOptions="Center"
                    VerticalOptions="Start"
@@ -27,8 +28,8 @@
             <Entry Grid.Row="1"
                    x:Name="MonthlyBudgetEntry"
                    Placeholder="Enter Monthly Budget"
-                   TextColor="Black"
-                   BackgroundColor="White"
+                   TextColor="{DynamicResource AppTextColor}"
+                   BackgroundColor="{DynamicResource AppBackgroundColor}"
                    BindingContextChanged="MonthlyBudgetEntry_BindingContextChanged"
                    Keyboard="Numeric"
                    VerticalOptions="Start"

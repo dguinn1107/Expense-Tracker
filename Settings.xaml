@@ -5,16 +5,18 @@
              Title="Settings"
              BackgroundColor="{DynamicResource AppBackgroundColor}"
              >
-   
 
 
-    <VerticalStackLayout>
+
+    <VerticalStackLayout BackgroundColor="Transparent">
         <Label 
             Text="Customize Your Settings"
+            TextColor="{DynamicResource AppTextColor}"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
         <Label 
             Text="Dark Mode"
+            TextColor="{DynamicResource AppTextColor}"
             HorizontalOptions="Start"
             VerticalOptions="Center"/>
 
@@ -26,7 +28,7 @@
                Toggled="IsDarkModeEnabled" 
                HorizontalOptions="Start" 
                VerticalOptions="Center" 
-               OnColor="Green"
+               OnColor="Black"
                ThumbColor="White"
                
                AutomationId="DarkModeSwitch" />
@@ -43,7 +45,7 @@
                Toggled="OnNotificationsToggled" 
                HorizontalOptions="Start" 
                VerticalOptions="Center" 
-               OnColor="Green"
+               OnColor="Black"
                ThumbColor="White"
                
                AutomationId="NotificationsSwitch" />
