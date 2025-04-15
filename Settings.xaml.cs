@@ -1,29 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Text.Json;
 using Microsoft.Maui.Controls;
 
-namespace ExpenseTracker;
-
-public partial class Settings : ContentPage, INotifyPropertyChanged
+namespace ExpenseTracker
 {
-    private const string FilePath = "settings.json";
-    private bool isDarkMode;
-    private string language = "en"; // Default language
-    private bool notificationsEnabled; // Default notification preference
-
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    public Settings()
+    public partial class Settings : ContentPage
     {
-        InitializeComponent();
-        BindingContext = this;  // Set the BindingContext for data binding.
-        LoadSettings();
-        UpdateTheme();
-        //UpdateLanguage();
-    }
+        public Settings()
+        {
+            InitializeComponent();
 
     public bool IsNotificationsEnabled
     {
@@ -86,16 +69,13 @@ public partial class Settings : ContentPage, INotifyPropertyChanged
     {
         if (IsDarkMode)
         {
-            Application.Current.Resources["AppBackgroundColor"] = Color.FromArgb("#000000");  // Dark mode background
-            Application.Current.Resources["AppTextColor"] = Color.FromArgb("#FFFFFF");        // White text for dark mode
+            Application.Current.Resources["AppBackgroundColor"] = Color.FromArgb("#DDE6F1");
         }
         else
         {
-            Application.Current.Resources["AppBackgroundColor"] = Color.FromArgb("#FFFFFF");  // Light mode background
-            Application.Current.Resources["AppTextColor"] = Color.FromArgb("#000000");        // Black text for light mode
+            Application.Current.Resources["AppBackgroundColor"] = Color.FromArgb("#FFFFFF");
         }
     }
-
 
     private void UpdateLanguage()
     {

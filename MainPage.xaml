@@ -1,43 +1,55 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:microcharts="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
-             x:Class="ExpenseTracker.MainPage">
-    <Grid RowDefinitions="Auto, *, Auto"
-          BackgroundColor="{DynamicResource AppBackgroundColor}"
-          
-         >
-        
-        <!-- Ex-Header Section 
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"  
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
+            xmlns:microcharts="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"  
+            x:Class="ExpenseTracker.MainPage">  
+   <Grid RowDefinitions="Auto, *, Auto"  
+         BackgroundColor="{DynamicResource AppBackgroundColor}">  
 
-        <Grid Padding="15" BackgroundColor="Transparent">
-            <Grid ColumnDefinitions="Auto, *" Margin="0,0,0,15">
-                
-                <Label Text="Latest Expenses"
-                       TextColor="{DynamicResource AppTextColor}"
-                       FontSize="36"
-                       HorizontalOptions="Center"
-                       VerticalOptions="Center"
-                       Grid.Column="0" />
-            </Grid>
-        </Grid>
-        -->
-    <!-- Main Content Area -->
-        <ScrollView>
-            <VerticalStackLayout Padding="10">
-                <Label Text="Analytics Graph"
-                       FontSize="24"
-                       TextColor="{DynamicResource AppTextColor}"
-                       BackgroundColor="{DynamicResource AppBackgroundColor}"
-                       HorizontalOptions="Center"
-                       VerticalOptions="Center" />
-                <ContentView>
-                    <microcharts:ChartView x:Name="DisplayChart"
-                                           HeightRequest="200"
-                                           
-                                           />
-                </ContentView>
-            </VerticalStackLayout>
-        </ScrollView>
-    </Grid>
-</ContentPage>
+       <!-- Header Section -->  
+       <Grid Padding="15" BackgroundColor="Transparent">  
+           <Grid ColumnDefinitions="Auto, *" Margin="0,0,0,15">  
+               <!-- Title -->  
+               <Label Text="Latest Expenses"  
+                      FontSize="36"  
+                      HorizontalOptions="Center"  
+                      VerticalOptions="Center"  
+                      TextColor="Black"  
+                      Grid.Column="0" />  
+           </Grid>  
+       </Grid>  
+
+       <!-- Main Content Area -->  
+       <ScrollView BackgroundColor="Transparent">  
+           <VerticalStackLayout Padding="10">  
+               <Label Text="Analytics Graph"  
+                      FontSize="24"  
+                      TextColor="Black"  
+                      HorizontalOptions="Center" />  
+
+               <ContentView>  
+                   <microcharts:ChartView x:Name="DisplayChart"  
+                                          
+                                          HeightRequest="200">  
+                       <microcharts:ChartView.GestureRecognizers>  
+                           <SwipeGestureRecognizer Direction="Left" Swiped="OnSwipedLeft"/>  
+                            
+                       </microcharts:ChartView.GestureRecognizers>  
+                   </microcharts:ChartView>  
+               </ContentView>  
+           </VerticalStackLayout>  
+       </ScrollView>
+
+        <Label x:Name="MonthlyBudgetLabel"
+           FontSize="24"
+           TextColor="Black"
+           HorizontalOptions="Center"
+           VerticalOptions="Center"
+           Grid.Row="1"
+           Text="{Binding MonthlyBudget}" />
+            
+
+
+    </Grid>  
+</ContentPage>                                
+

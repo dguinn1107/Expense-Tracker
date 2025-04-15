@@ -5,18 +5,16 @@
              Title="Settings"
              BackgroundColor="{DynamicResource AppBackgroundColor}"
              >
+   
 
 
-
-    <VerticalStackLayout BackgroundColor="Transparent">
+    <VerticalStackLayout>
         <Label 
             Text="Customize Your Settings"
-            TextColor="{DynamicResource AppTextColor}"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
         <Label 
             Text="Dark Mode"
-            TextColor="{DynamicResource AppTextColor}"
             HorizontalOptions="Start"
             VerticalOptions="Center"/>
 
@@ -28,7 +26,7 @@
                Toggled="IsDarkModeEnabled" 
                HorizontalOptions="Start" 
                VerticalOptions="Center" 
-               OnColor="Black"
+               OnColor="Green"
                ThumbColor="White"
                
                AutomationId="DarkModeSwitch" />
@@ -45,7 +43,7 @@
                Toggled="OnNotificationsToggled" 
                HorizontalOptions="Start" 
                VerticalOptions="Center" 
-               OnColor="Black"
+               OnColor="Green"
                ThumbColor="White"
                
                AutomationId="NotificationsSwitch" />
@@ -53,15 +51,9 @@
 
 
 
-        <!--<Button 
-            Text="Reset Data" 
-            Clicked="OnResetDataClicked" 
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-        <Button 
-            Text="About" 
-            Clicked="OnAboutClicked" 
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />-->
-    </VerticalStackLayout>
+        <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+            <Label Text="Notifications" VerticalOptions="Center" />
+            <Switch IsToggled="{Binding NotificationsEnabled}" />
+        </StackLayout>
+    </StackLayout>
 </ContentPage>
