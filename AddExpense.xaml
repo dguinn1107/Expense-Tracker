@@ -8,6 +8,8 @@
     <VerticalStackLayout>
         <Label 
             Text="Add Your Expenses"
+            TextColor="{DynamicResource AppTextColor}"
+            FontSize="32"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
        
@@ -28,6 +30,7 @@
                     <Label Text="{Binding .}" 
                     Padding="10"
                     FontSize="16"
+                    TextColor="{DynamicResource AppTextColor}"
                     LineBreakMode="WordWrap"/> <!-- the . binds the whole csv string to label -->
                     
                 </DataTemplate>

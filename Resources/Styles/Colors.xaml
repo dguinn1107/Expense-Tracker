@@ -6,12 +6,20 @@
 
     <!-- Note: For Android please see also Platforms\Android\Resources\values\colors.xml -->
 
-    <Color x:Key="Primary">#512BD4</Color>
-    <Color x:Key="PrimaryDark">#ac99ea</Color>
-    <Color x:Key="PrimaryDarkText">#242424</Color>
-    <Color x:Key="Secondary">#DFD8F7</Color>
-    <Color x:Key="SecondaryDarkText">#9880e5</Color>
-    <Color x:Key="Tertiary">#2B0B98</Color>
+    <!-- Blue-themed color settings -->
+    
+    <Color x:Key="Primary">#2196F3</Color>
+    <!-- A clear blue for primary elements -->
+    <Color x:Key="PrimaryDark">#1976D2</Color>
+    <!-- A darker blue variant -->
+    <Color x:Key="PrimaryDarkText">#FFFFFF</Color>
+    <!-- White text on dark primary surfaces -->
+    <Color x:Key="Secondary">#E3F2FD</Color>
+    <!-- A very light blue for secondary surfaces -->
+    <Color x:Key="SecondaryDarkText">#0D47A1</Color>
+    <!-- A deep blue for text on secondary backgrounds -->
+    <Color x:Key="Tertiary">#0277BD</Color>
+    <!-- An accent blue for tertiary elements -->
 
     <Color x:Key="White">White</Color>
     <Color x:Key="Black">Black</Color>
