@@ -6,69 +6,50 @@
              BackgroundColor="{DynamicResource AppBackgroundColor}">
 
     <ScrollView Orientation="Vertical">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
+        <VerticalStackLayout>
+            <Label Text="{Binding ReportLabelText}"
+                 TextColor="{DynamicResource AppTextColor}"
+                 FontSize="32"
+                 HorizontalOptions="Center"
+                 VerticalOptions="Start"
+                 Margin="10" />
 
-            <Label Text="Reports"
-                   TextColor="{DynamicResource AppTextColor}"
-                   FontSize="32"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Start"
-                   Margin="10"
-                   Grid.Row="0" />
+            <Label Text="{Binding MonthSliderLabelText}"
+                 TextColor="{DynamicResource AppTextColor}"
+                 FontSize="24"
+                 HorizontalOptions="Center"
+                 VerticalOptions="Start"
+                 Margin="10" />
 
-            <Entry Grid.Row="1"
-                   x:Name="MonthlyBudgetEntry"
-                   Placeholder="Enter Monthly Budget"
-                   TextColor="Black"
-                   BackgroundColor="White"
-                   BindingContextChanged="MonthlyBudgetEntry_BindingContextChanged"
-                   Keyboard="Numeric"
-                   VerticalOptions="Start"
-                   HorizontalOptions="FillAndExpand"
-                   Margin="10" />
+            <Slider Minimum="1"
+                Maximum="{Binding MaxMonth}"
+                Value="{Binding MonthSliderValue, Mode=TwoWay}" />
 
-            <mc:ChartView x:Name="PieChartView"
-                          Grid.Row="2"
-                          HeightRequest="180"
-                          WidthRequest="400"
-                          Margin="10" />
 
-            <mc:ChartView x:Name="BarChartView"
-                          Grid.Row="3"
-                          HeightRequest="180"
-                          WidthRequest="400"
-                          Margin="10" />
 
-            <mc:ChartView x:Name="LineChartView"
-                          Grid.Row="4"
-                          HeightRequest="180"
-                          WidthRequest="400"
-                          Margin="10" />
+            <Label Text="Pie Chart" />
+            <mc:ChartView Chart="{Binding PieChart}"
+                        HeightRequest="180"
+                        WidthRequest="400"
+                        Margin="10" />
 
-            <mc:ChartView x:Name="DonutChart"
-                          Grid.Row="5"
-                          HeightRequest="180"
-                          WidthRequest="400"
-                          Margin="10" />
+            <Label Text="Bar Chart" />
+            <mc:ChartView Chart="{Binding BarChart}"
+                        HeightRequest="180"
+                        WidthRequest="400"
+                        Margin="10" />
 
-            <mc:ChartView x:Name="RadarChartView"
-                          Grid.Row="6"
-                          HeightRequest="180"
-                          WidthRequest="400"
-                          Margin="10" />
-        </Grid>
+            <Label Text="Line Chart" />
+            <mc:ChartView Chart="{Binding LineChart}"
+                        HeightRequest="180"
+                        WidthRequest="400"
+                        Margin="10" />
+
+            <Label Text="Donut Chart" />
+            <mc:ChartView Chart="{Binding DonutChart}"
+                        HeightRequest="180"
+                        WidthRequest="400"
+                        Margin="10" />
+        </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
-
-
-
-

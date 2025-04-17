@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Text.Json;
 
 namespace ExpenseTracker
 {
-    public class SettingsModel
+    public class SettingsModel 
     {
         private const string FilePath = "settings.json";
+       
 
         public bool IsDarkMode { get; set; }
         public string Language { get; set; } = "en";
@@ -60,6 +62,29 @@ namespace ExpenseTracker
 
             string json = JsonSerializer.Serialize(settingsDict);
             File.WriteAllText(fullPath, json);
+
+
         }
+
+        public void ReloadMainPageLabel()
+        {
+            string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            string fullPath = Path.Combine(folderPath, "MyAppSettings.json");
+
+            if (File.Exists(fullPath))
+            {
+                string json = File.ReadAllText(fullPath);
+                var settings = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
+
+                if (settings != null && settings.ContainsKey("MonthlyBudget"))
+                {
+                    MonthlyBudget = settings["MonthlyBudget"];
+                }
+            }
+        }
+
+
+
+
     }
 }

@@ -32,7 +32,7 @@ namespace ExpenseTracker
                 {
                     _settings.IsDarkMode = value;
                     OnPropertyChanged();
-                    _settings.SaveSettings();
+                  //  _settings.SaveSettings();
                     UpdateTheme(); // Apply theme changes
                 }
             }
@@ -42,7 +42,7 @@ namespace ExpenseTracker
         {
             if (_settings.IsDarkMode)
             {
-                Application.Current.Resources["AppBackgroundColor"] = Color.FromArgb("#303030");
+                Application.Current.Resources["AppBackgroundColor"] = Color.FromArgb("#345D7E");
                 // Adjust other resources as needed.
             }
             else
@@ -62,7 +62,7 @@ namespace ExpenseTracker
                 {
                     _settings.Language = value;
                     OnPropertyChanged();
-                    _settings.SaveSettings();
+                  //  _settings.SaveSettings();
                 }
             }
         }
@@ -76,7 +76,8 @@ namespace ExpenseTracker
                 {
                     _settings.NotificationsEnabled = value;
                     OnPropertyChanged();
-                    _settings.SaveSettings();
+                   // _settings.SaveSettings();
+
                 }
             }
         }
@@ -89,8 +90,10 @@ namespace ExpenseTracker
                 if (_monthlyBudget != value)
                 {
                     _monthlyBudget = value;
-                    OnPropertyChanged();
+
+                    OnPropertyChanged(nameof(MonthlyBudget));
                     ValidateMonthlyBudget();
+                    //_settings.SaveSettings();
                 }
             }
         }
@@ -145,5 +148,7 @@ namespace ExpenseTracker
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+
     }
 }

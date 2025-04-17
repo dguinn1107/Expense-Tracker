@@ -15,7 +15,10 @@
             x:Name="MonthlyBudgetEntry"
             Keyboard="Numeric"
             Text="{Binding MonthlyBudget}" 
-            Placeholder="Enter your monthly budget" />
+            Placeholder="Enter your monthly budget"
+            TextChanged="MonthlyBudgetEntry_TextChanged"
+            />
+        
 
         <Label 
             Text="{Binding MonthlyBudgetError}" 
@@ -28,7 +31,10 @@
 
         <Button 
             Text="Save Settings" 
-            Command="{Binding SaveCommand}" />
+            Clicked="SaveSettingsButton_Clicked"
+            IsEnabled="{Binding IsSaveButtonEnabled}" />
+
+        
     </StackLayout>
 
 </ContentPage>

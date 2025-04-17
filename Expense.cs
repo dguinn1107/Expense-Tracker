@@ -8,92 +8,73 @@ using System.Threading.Tasks;
 
 namespace ExpenseTracker
 {
-    public class Expense //might have to change to "public static class Expense" to be able to use method
+    public class Expense
     {
-        public string Month { get; set; } //subject to deletion or to be replaced by variable "date" in comment below 
-        public float Amount { get; set; } //will be used to create object in Method for loading csv 
-        public string Category { get; set; } //will be used to create object in Method for loading csv 
+        public float Amount { get; set; }
+        public string Category { get; set; }
         public string Name { get; set; }
-
-        //public DateTime date {get; set;} //a new variable that will be used in Method; not entirely sure
-        // **how to strictly extract the month from date that was submitted to csv**
+        public DateTime Date { get; set; } 
 
         private List<string> Categories = new List<string>
-            {
-                "Food",
-                "Transportation",
-                "Entertainment",
-                "Utilities",
-                "Healthcare",
-                "Other"
-            };
+    {
+        "Food", "Transportation", "Entertainment", "Utilities", "Healthcare", "Other"
+    };
 
         public string _Category
         {
-            get { return Category; }
+            get => Category;
             set
             {
-                if (string.IsNullOrEmpty(value))
+                if (string.IsNullOrEmpty(value) || !Categories.Contains(value))
                 {
-                    throw new ArgumentException("Category cannot be null or empty");
+                    throw new ArgumentException("Invalid or missing category.");
                 }
-
-                if (!Categories.Contains(value))
-                {
-                    throw new ArgumentException($"Invalid category. Valid categories are: {string.Join(", ", Categories)}");
-                }
-                else
-                {
-                    Category = value;
-                }
+                Category = value;
             }
         }
-        //public
 
         public static List<Expense> CurrentExpenses()
         {
-            var expenses = new List<Expense>(); // creates empty list
-            var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData); // existing file will be stored in variable
+            var expenses = new List<Expense>();
+            var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             var filePath = System.IO.Path.Combine(folderPath, "expenses.csv");
 
-            if (!File.Exists(filePath)) return expenses; // returns an empty list if file doesn't exist
+            if (!File.Exists(filePath)) return expenses;
 
-            var lines = File.ReadAllLines(filePath).Skip(1); // read all lines except the first as it's a header
-            foreach (var line in lines) // reusing the foreach from AddExpense.xaml.cs
+            var lines = File.ReadAllLines(filePath).Skip(1);
+            foreach (var line in lines)
             {
                 var parts = line.Split(',');
-
                 if (parts.Length >= 3)
                 {
-                    var category = parts[1]; // "type" was renamed Category (existing variable in this same cs page)
-                    var date = parts[2];
-                    var amount = parts[0];
-
-                    if (float.TryParse(amount, out float parsedAmount)) // safely parse the amount
+                    if (float.TryParse(parts[0], out float parsedAmount)
+                        && DateTime.TryParse(parts[2], out DateTime parsedDate))
                     {
-                        var entry = new Expense { Amount = parsedAmount, Category = category }; // creates object
-                        expenses.Add(entry); // load csv regularly and adds object into expenses
+                        var entry = new Expense
+                        {
+                            Amount = parsedAmount,
+                            Category = parts[1],
+                            Date = parsedDate,
+                            Name = parts.Length > 3 ? parts[3] : ""
+                        };
+                        expenses.Add(entry);
                     }
                 }
             }
 
-            return expenses; // ensures all code paths return a value
+            return expenses;
         }
 
-        public static float TotalAmountOfExpenses ()
+        public static float TotalAmountOfExpenses()
         {
-            var expenses = CurrentExpenses();
-            float totalAmount = expenses.Sum(e => e.Amount);
-            return totalAmount;
+            return CurrentExpenses().Sum(e => e.Amount);
         }
 
         public static float ExceedsMonthlyBudget()
         {
             var settingsModel = new SettingsModel();
-
-            var expenses = CurrentExpenses();
-            float totalAmount = expenses.Sum(e => e.Amount);
-            return totalAmount - float.Parse(settingsModel.MonthlyBudget);
+            return TotalAmountOfExpenses() - float.Parse(settingsModel.MonthlyBudget);
         }
     }
+
 }
