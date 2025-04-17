@@ -15,7 +15,8 @@ namespace ExpenseTracker
         public bool IsDarkMode { get; set; }
         public string Language { get; set; } = "en";
         public bool NotificationsEnabled { get; set; } = true;
-        public string MonthlyBudget { get; set; } = "0";
+        public string 
+            MonthlyBudget { get; set; } = "0";
 
         public static SettingsModel LoadSettings()
         {
@@ -62,6 +63,8 @@ namespace ExpenseTracker
 
             string json = JsonSerializer.Serialize(settingsDict);
             File.WriteAllText(fullPath, json);
+
+           ReloadMainPageLabel();
 
 
         }

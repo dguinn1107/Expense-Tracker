@@ -11,6 +11,8 @@ namespace ExpenseTracker
         private string _monthlyBudget;
         private string _monthlyBudgetError;
 
+        public string FormattedMonthlyBudget => $"Monthly Budget: ${MonthlyBudget}";
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public SettingsViewModel()
@@ -32,7 +34,6 @@ namespace ExpenseTracker
                 {
                     _settings.IsDarkMode = value;
                     OnPropertyChanged();
-                  //  _settings.SaveSettings();
                     UpdateTheme(); // Apply theme changes
                 }
             }
@@ -43,16 +44,12 @@ namespace ExpenseTracker
             if (_settings.IsDarkMode)
             {
                 Application.Current.Resources["AppBackgroundColor"] = Color.FromArgb("#345D7E");
-                // Adjust other resources as needed.
             }
             else
             {
                 Application.Current.Resources["AppBackgroundColor"] = Color.FromArgb("#FFFFFF");
-                Application.Current.Resources["AppTextColor"] = Color.FromArgb("#303030");
-                // Adjust other resources as needed.
             }
         }
-
 
         public string Language
         {
@@ -63,7 +60,6 @@ namespace ExpenseTracker
                 {
                     _settings.Language = value;
                     OnPropertyChanged();
-                  //  _settings.SaveSettings();
                 }
             }
         }
@@ -77,8 +73,6 @@ namespace ExpenseTracker
                 {
                     _settings.NotificationsEnabled = value;
                     OnPropertyChanged();
-                   // _settings.SaveSettings();
-
                 }
             }
         }
@@ -90,16 +84,13 @@ namespace ExpenseTracker
             {
                 if (_monthlyBudget != value)
                 {
-                    _monthlyBudget = value;
-
-                    OnPropertyChanged(nameof(MonthlyBudget));
                     ValidateMonthlyBudget();
-                    //_settings.SaveSettings();
+                    _monthlyBudget = value;
+                    OnPropertyChanged(nameof(FormattedMonthlyBudget));
                 }
             }
         }
 
-     
         public string MonthlyBudgetError
         {
             get => _monthlyBudgetError;
@@ -142,6 +133,10 @@ namespace ExpenseTracker
             // All validations passed.
             MonthlyBudgetError = string.Empty;
             _settings.MonthlyBudget = MonthlyBudget;
+        }
+
+        public void SaveSettings()
+        {
             _settings.SaveSettings();
         }
 
@@ -149,7 +144,6 @@ namespace ExpenseTracker
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-
     }
 }
+

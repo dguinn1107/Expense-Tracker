@@ -17,7 +17,6 @@ namespace ExpenseTracker
             DisplayChart.Chart = reportObj.LoadRandomChart();
 
             BindingContext = App.SharedSettingsViewModel;
-
         }
 
 

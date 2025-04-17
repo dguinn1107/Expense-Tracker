@@ -5,7 +5,6 @@ namespace ExpenseTracker
     public partial class Settings : ContentPage
     {
         public Settings()
-
         {
             InitializeComponent();
             BindingContext = new SettingsViewModel();
@@ -13,22 +12,27 @@ namespace ExpenseTracker
 
         private void MonthlyBudgetEntry_TextChanged(object sender, TextChangedEventArgs e)
         {
-            
-            MonthlyBudgetEntry.Text = e.NewTextValue;
-            
+            // Update the MonthlyBudget property in the ViewModel
+            var viewModel = BindingContext as SettingsViewModel;
+            if (viewModel != null)
+            {
+                viewModel.MonthlyBudget = e.NewTextValue;
+            }
         }
 
         private void SaveSettingsButton_Clicked(object sender, EventArgs e)
         {
-            var Model = BindingContext as SettingsModel;
-            if (Model != null)
+            
+            var viewModel = BindingContext as SettingsViewModel;
+            if (viewModel != null)
             {
-                Model.SaveSettings();
-
-                Model.ReloadMainPageLabel();
+                
+                viewModel.SaveSettings();
                 DisplayAlert("Success", "Settings saved successfully.", "OK");
             }
         }
     }
 }
+
+  
 

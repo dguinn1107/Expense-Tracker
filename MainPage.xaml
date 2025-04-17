@@ -47,7 +47,7 @@
            HorizontalOptions="Center"
            VerticalOptions="Center"
            Grid.Row="1"
-           Text="{Binding MonthlyBudget}" 
+           Text="{Binding FormattedMonthlyBudget}" 
            
                />
             
