@@ -48,6 +48,7 @@ namespace ExpenseTracker
             else
             {
                 Application.Current.Resources["AppBackgroundColor"] = Color.FromArgb("#FFFFFF");
+                Application.Current.Resources["AppTextColor"] = Color.FromArgb("#303030");
                 // Adjust other resources as needed.
             }
         }
