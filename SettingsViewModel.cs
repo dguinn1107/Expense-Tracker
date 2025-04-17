@@ -43,11 +43,13 @@ namespace ExpenseTracker
             if (_settings.IsDarkMode)
             {
                 Application.Current.Resources["AppBackgroundColor"] = Color.FromArgb("#303030");
+                Application.Current.Resources["AppTextColor"] = Color.FromArgb("#FFFFFF");
                 // Adjust other resources as needed.
             }
             else
             {
                 Application.Current.Resources["AppBackgroundColor"] = Color.FromArgb("#FFFFFF");
+                Application.Current.Resources["AppTextColor"] = Color.FromArgb("#303030");
                 // Adjust other resources as needed.
             }
         }

@@ -6,25 +6,25 @@
    <Grid RowDefinitions="Auto, *, Auto"  
          BackgroundColor="{DynamicResource AppBackgroundColor}">  
 
-       <!-- Header Section -->  
+       <!-- Header Section
        <Grid Padding="15" BackgroundColor="Transparent">  
            <Grid ColumnDefinitions="Auto, *" Margin="0,0,0,15">  
-               <!-- Title -->  
+                
                <Label Text="Latest Expenses"  
                       FontSize="36"  
                       HorizontalOptions="Center"  
                       VerticalOptions="Center"  
                       TextColor="Black"  
                       Grid.Column="0" />  
-           </Grid>  
-       </Grid>  
+           </Grid>
+        </Grid> -->
 
-       <!-- Main Content Area -->  
-       <ScrollView BackgroundColor="Transparent">  
+        <!-- Main Content Area -->
+        <ScrollView BackgroundColor="{DynamicResource AppBackgroundColor}">  
            <VerticalStackLayout Padding="10">  
                <Label Text="Analytics Graph"  
                       FontSize="24"  
-                      TextColor="Black"  
+                      TextColor="{DynamicResource AppTextColor}"
                       HorizontalOptions="Center" />  
 
                <ContentView>  
@@ -42,7 +42,7 @@
 
         <Label x:Name="MonthlyBudgetLabel"
            FontSize="24"
-           TextColor="Black"
+           TextColor="{DynamicResource AppTextColor}"
            HorizontalOptions="Center"
            VerticalOptions="Center"
            Grid.Row="1"
