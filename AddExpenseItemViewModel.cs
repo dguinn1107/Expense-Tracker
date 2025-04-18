@@ -10,17 +10,30 @@ namespace ExpenseTracker
     internal class AddExpenseItemViewModel : INotifyPropertyChanged // should notify ui when property is changed
     {
         // expense form properties
+        public string _ExpenseName="";
         public string _ExpenseAmount = "";
         public string _SelectedExpenseType;
-        public DateTime _SelectedDate = DateTime.Now;
+        public DateTime _SelectedDate = DateTime.Now;   
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public List<string> ExpenseTypes { get; } = new List<string> //creates a list as well as gets ExpenseType from user
-            {
+        {
             "Food", "Transportation", "Entertainment", "Utilities", "Shopping"
-            };
+        };
 
+        public string ExpenseName //was last addition to the properties
+        {
+            get { return _ExpenseName; }
+            set
+            {
+                if (_ExpenseName != value)
+                {
+                    _ExpenseName = value;
+                    OnPropertyChanged(nameof(ExpenseName));
+                }
+            }
+        }
 
         public string ExpenseAmount
         {

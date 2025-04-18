@@ -2,7 +2,7 @@ namespace ExpenseTracker;
 
 public partial class AddExpenseItem : ContentPage
 {
-    public event Action<string, decimal> ExpenseAdded;
+    public event Action<string, string, decimal> ExpenseAdded;
 
     public AddExpenseItem()
 	{
@@ -10,7 +10,7 @@ public partial class AddExpenseItem : ContentPage
         BindingContext = new AddExpenseItemViewModel();
     }
 
-    private void SaveToCsv(string expenseAmount, string expenseType, DateTime expenseDate) //creates new csv file
+    private void SaveToCsv(string expenseName, string expenseAmount, string expenseType, DateTime expenseDate) //creates new csv file
     {
         //define the file path                                    
         var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
@@ -24,13 +24,14 @@ public partial class AddExpenseItem : ContentPage
         {
             using (StreamWriter writer = new StreamWriter(filePath))
             {
-                writer.WriteLine("ExpenseAmount,ExpenseType,ExpenseDate"); // Header for file
+                writer.WriteLine("ExpenseName,ExpenseAmount,ExpenseType,ExpenseDate"); // Header for file
             }
         }
         // add new data to csv
         using (StreamWriter writer = new StreamWriter(filePath, append: true))
         {
-            writer.WriteLine($"{expenseAmount},{expenseType},{expenseDate:yyyy-MM-dd}"); // properties
+            writer.WriteLine($"{expenseName},{expenseAmount},{expenseType},{expenseDate:yyyy-MM-dd HH:mm:ss}"); // properties; have to save the hours and
+                                                                                                       // sec to tell most recent transaction apart from other transactions
         }
         //confirms save visually (for testing)
         //Application.Current.MainPage.DisplayAlert("Saved", "Expense was saved successfully.", "OK");
@@ -42,16 +43,17 @@ public partial class AddExpenseItem : ContentPage
 
     private async void OnSaveExpense(object sender, EventArgs e) //saving properties
     {
-        var viewModel = (AddExpenseItemViewModel)BindingContext;
+        var viewModel = (AddExpenseItemViewModel)BindingContext; //have an object viewmodel
 
+        string expenseName = viewModel._ExpenseName;
         string expenseAmount = viewModel._ExpenseAmount;
         string selectedExpenseType = viewModel._SelectedExpenseType;
         DateTime selectedDate = viewModel._SelectedDate;
 
-        decimal amount; //the vairable im defing so that the "out amount can be used"
+        decimal amount; //the variable im defining so that the "out amount can be used"
 
         //if expense amount and or Type fields are empty or invalid; message pops up to notify user
-        if (string.IsNullOrEmpty(expenseAmount) || string.IsNullOrEmpty(selectedExpenseType) ||
+        if (string.IsNullOrEmpty(expenseAmount) || string.IsNullOrEmpty(selectedExpenseType) || string.IsNullOrEmpty(expenseName) ||
     !decimal.TryParse(expenseAmount, out amount) ||
     (expenseAmount.Contains('.') && expenseAmount.Split('.')[1].Length > 2))
         {
@@ -59,15 +61,16 @@ public partial class AddExpenseItem : ContentPage
             return;
         }
 
-        SaveToCsv(expenseAmount, selectedExpenseType, selectedDate);
+        SaveToCsv(expenseName,expenseAmount, selectedExpenseType, selectedDate);
 
         //lets AddExpense page know if needed; npotifies AdExpense page        
-            ExpenseAdded?.Invoke(selectedExpenseType, amount);
+            ExpenseAdded?.Invoke(selectedExpenseType, expenseName, amount);
  
         await DisplayAlert("Saved", "Your expense has been saved.", "OK");//  "Saved" confirmation
     
         await Navigation.PopModalAsync(); // goes back to AddExpense page
     }
+
     private async void OnCancel(object sender, EventArgs e)//confirmation before cancelling
     {
         

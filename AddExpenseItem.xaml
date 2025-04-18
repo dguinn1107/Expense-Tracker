@@ -8,19 +8,23 @@
        FontSize="20"
        HorizontalOptions="Center"/>
 
+        <Entry x:Name="ExpenseNameEntry"
+            Placeholder="Enter Name (e.g. Burger King)"
+            Text="{Binding ExpenseName, Mode=TwoWay}"/>
+
         <Picker x:Name="ExpenseTypePicker"
-Title="Select Expense Type"
-ItemsSource="{Binding ExpenseTypes}"
-SelectedItem="{Binding SelectedExpenseType}"/>
+            Title="Select Expense Type"
+            ItemsSource="{Binding ExpenseTypes}"
+            SelectedItem="{Binding SelectedExpenseType}"/>
 
         <Entry x:Name="ExpenseAmount"
-       Placeholder="Amount" 
-        Text="{Binding ExpenseAmount, Mode=TwoWay}"
-       Keyboard="Numeric"/>
+            Placeholder="Amount" 
+            Text="{Binding ExpenseAmount, Mode=TwoWay}"
+            Keyboard="Numeric"/>
 
         <DatePicker x:Name="ExpenseDatePicker"
-         Format="D"
-         Date="{Binding SelectedDate, Mode=TwoWay}"/>
+            Format="D"
+            Date="{Binding SelectedDate, Mode=TwoWay}"/>
 
         <HorizontalStackLayout HorizontalOptions="Center">
             <Button Text="Save" Clicked="OnSaveExpense"/>

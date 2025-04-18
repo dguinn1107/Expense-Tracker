@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 
 namespace ExpenseTracker;
 
@@ -36,13 +36,29 @@ public partial class AddExpense : ContentPage
         //    }
         // ^^ !! Your logic for the button that I commented out in the .xaml of this page!! ^^
         var addExpenseItemPage = new AddExpenseItem();
-        addExpenseItemPage.ExpenseAdded += (name, amount) =>
+
+        addExpenseItemPage.ExpenseAdded += (type, name, amount) =>
         {
             string expenseName = name;
             string expenseAmount = "$" + amount;
-            string expenseEntry = $"Type: {name} \nAmount: ${amount}\nDate: {DateTime.Now:yyyy-MM-dd}"; //im on this step       
+            string expenseEntry = $"Name: {name}\nType: {type}\nAmount: ${amount}\nDate: {DateTime.Now:yyyy-MM-dd HH:mm:ss}"; //im on this step       
                                                                                                         //transactions.Add(expenseEntry);
             transactions.Insert(0, expenseEntry);//save in csv at the first index so oldest (will display at top of list) 
+
+            //save to CSV file so it persists after restart
+            var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var filePath = Path.Combine(folderPath, "expenses.csv");
+
+            // If file doesn't exist, create it and add headers
+            if (!File.Exists(filePath))
+            {
+                File.WriteAllText(filePath, "Amount,Type,Date,Name\n");
+            }
+
+            // Append this new transaction to the CSV file
+            //var csvLine = $"{amount},{type},{DateTime.Now:yyyy-MM-dd},{name}"; //not necessary, was duplicating lates expense
+            //File.AppendAllText(filePath, csvLine + "\n"); //not necessary, was duplicating latest expense
+
 
             TransactionList.ItemsSource = null; //to clear or refresh 
             TransactionList.ItemsSource = transactions; //updates the list
@@ -72,15 +88,25 @@ public partial class AddExpense : ContentPage
             {
                 var parts = line.Split(',');
 
-                if (parts.Length >= 3)
+                if(parts.Length == 3) //loads the old transactions (transactions that didn't have a name property)
                 {
-                    var type = parts[1];
+                    var type = parts[0];
+                    var amount = parts[1];
                     var date = parts[2];
-                    var amount = parts[0];
+                    string formattedEntry = $"Name: N/A\nType: {type}\nAmount: ${amount}\nDate: {date}";
+                    transactions.Add(formattedEntry);
+                }
+
+                else if (parts.Length >= 4)
+                {
+                    var type = parts[2]; //0000
+                    var date = parts[3]; //3333
+                    var amount = parts[1]; //1111
+                    var name= parts[0]; //22
 
 
                     //formatting part
-                    string formattedEntry = $"Type: {type}\nAmount: ${amount}\nDate: {date}";
+                    string formattedEntry = $"Name: {name}\nType: {type}\nAmount: ${amount}\nDate: {date}";
                     //transactions.Insert(0, formattedEntry);
                     transactions.Add(formattedEntry); // load csv regularly so from newest to oldest
                 }

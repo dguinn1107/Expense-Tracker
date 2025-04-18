@@ -7,7 +7,7 @@
     
     <VerticalStackLayout>
         <Label 
-            Text="Add Your Expenses"
+            Text="Your Expenses"
             TextColor="{DynamicResource AppTextColor}"
             FontSize="32"
             VerticalOptions="Center" 
@@ -25,14 +25,28 @@
         <CollectionView x:Name="TransactionList"
                 ItemsSource="{Binding transactions}"
                 HeightRequest="300">
+
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Label Text="{Binding .}" 
-                    Padding="10"
-                    FontSize="16"
+                    <VerticalStackLayout Margin="0,1">
+                        
+                    <Frame
+                        Margin="8,5"
+                        CornerRadius="15"
+                        BackgroundColor="White"
+                        BorderColor="LightGray"
+                        Padding="1"
+                        HasShadow="True">
+                        
+                        <Label Text="{Binding .}"
+ 
+                    Padding="8"
+                    FontSize="15"
                     TextColor="{DynamicResource AppTextColor}"
-                    LineBreakMode="WordWrap"/> <!-- the . binds the whole csv string to label -->
-                    
+                    LineBreakMode="WordWrap"/>
+                        <!-- the . binds the whole csv string to label -->
+                    </Frame>
+                    </VerticalStackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

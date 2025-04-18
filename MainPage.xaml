@@ -2,50 +2,104 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"  
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
             xmlns:microcharts="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"  
-            x:Class="ExpenseTracker.MainPage">  
-   <Grid RowDefinitions="Auto, *, Auto"  
-         BackgroundColor="{DynamicResource AppBackgroundColor}"
- 
-         >  
+            x:Class="ExpenseTracker.MainPage">
 
-       <!-- Header Section
-       <Grid Padding="15" BackgroundColor="Transparent">  
-           <Grid ColumnDefinitions="Auto, *" Margin="0,0,0,15">  
-                
-               <Label Text="Latest Expenses"  
+    <ScrollView>
+        <VerticalStackLayout Padding="10" Spacing="20" BackgroundColor="{DynamicResource AppBackgroundColor}">
+            <Grid RowDefinitions="Auto, *, Auto"  
+         BackgroundColor="{DynamicResource AppBackgroundColor}">
+
+                <!-- Header Section -->
+                <Grid Padding="15" BackgroundColor="Transparent">
+                    <Grid ColumnDefinitions="Auto, *" Margin="0,0,0,15">
+                        <!-- Title -->
+                        <Label Text="Latest Expenses"  
                       FontSize="36"  
                       HorizontalOptions="Center"  
                       VerticalOptions="Center"  
                       TextColor="Black"  
-                      Grid.Column="0" />  
-           </Grid>
-        </Grid> -->
+                      Grid.Column="0" />
+                    </Grid>
+                </Grid>
 
-        <!-- Main Content Area -->
-        <ScrollView BackgroundColor="{DynamicResource AppBackgroundColor}">  
-           <VerticalStackLayout Padding="10">  
-               <Label Text="Analytics Graph"  
+                <!-- Main Content Area -->
+                <ScrollView BackgroundColor="Transparent">
+                    <VerticalStackLayout Padding="10">
+                        <Label Text="Analytics Graph"  
                       FontSize="24"  
-                      TextColor="{DynamicResource AppTextColor}"
-                      HorizontalOptions="Center" />  
+                      TextColor="Black"  
+                      HorizontalOptions="Center" />
 
-               <ContentView>  
-                   <microcharts:ChartView x:Name="DisplayChart"  
+                        <ContentView>
+                            <microcharts:ChartView x:Name="DisplayChart"  
                                           
-                                          HeightRequest="200">  
-                       <microcharts:ChartView.GestureRecognizers>  
-                           <SwipeGestureRecognizer Direction="Left" Swiped="OnSwipedLeft"/>  
-                            
-                       </microcharts:ChartView.GestureRecognizers>  
-                   </microcharts:ChartView>  
-               </ContentView>  
-           </VerticalStackLayout>  
-       </ScrollView>
+                                          HeightRequest="200">
+                                <microcharts:ChartView.GestureRecognizers>
+                                    <SwipeGestureRecognizer Direction="Left" Swiped="OnSwipedLeft"/>
 
-    
-              
+                                </microcharts:ChartView.GestureRecognizers>
+                            </microcharts:ChartView>
+                        </ContentView>
+                    </VerticalStackLayout>
+                </ScrollView>
+                
+                <!--would be good to change the use of this label to simply display "Latest Expense:" in text field for my latest expense label -->
+                <Label x:Name="MonthlyBudgetLabel"
+           FontSize="23"
+           TextColor="Black"
+           HorizontalOptions="Center"
+           VerticalOptions="Center"
+           Grid.Row="1"
+           Text="Most Recent Expense:" />
+ 
+
+                <Frame Grid.Row="2"
+       Margin="100,10"
+       CornerRadius="12"
+       BackgroundColor="White"
+       BorderColor="LightGray"
+       Padding="10"
+       HasShadow="True">
+                    <Grid ColumnDefinitions="*,Auto"
+          RowDefinitions="Auto,Auto">
+                        <Label x:Name="LatestExpenseNameLabel"
+               Grid.Row="0"
+               Grid.Column="0"
+               Text="Groceries"
+               FontSize="18"
+               FontAttributes="Bold"
+               TextColor="Black" />
+
+                        <Label x:Name="LatestExpenseAmountLabel"
+               Grid.Row="0"
+               Grid.Column="1"
+               Text="$25.00"
+               FontSize="18"
+               TextColor="DarkGreen"
+               HorizontalOptions="End" />
+
+                        <Label x:Name="LatestExpenseCategoryLabel"
+               Grid.Row="1"
+               Grid.Column="0"
+               Text="Category: Food"
+               FontSize="14"
+               TextColor="Gray" />
+
+                        <Label x:Name="LatestExpenseDateLabel"
+               Grid.Row="1"
+               Grid.Column="1"
+               Text="Apr 16"
+               FontSize="14"
+               TextColor="Gray"
+               HorizontalOptions="End" />
+                    </Grid>
+                </Frame>
 
 
-    </Grid>  
+
+
+            </Grid>
+        </VerticalStackLayout>
+        </ScrollView>
 </ContentPage>                                
 
