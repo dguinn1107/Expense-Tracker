@@ -17,7 +17,6 @@ namespace ExpenseTracker
         public bool NotificationsEnabled { get; set; } = true;
         public string  MonthlyBudget { get; set; } = "0";
 
-        public string FormattedMonthlyBudget {get; set;}
 
 
       

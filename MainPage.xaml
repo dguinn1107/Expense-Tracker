@@ -43,15 +43,9 @@
        </ScrollView>
 
       
-        <Label x:Name="MonthlyBudgetLabel"
-           FontSize="24"
-           TextColor="{DynamicResource AppTextColor}"
-           HorizontalOptions="Center"
-           VerticalOptions="Center"
-           Grid.Row="1"
-           Text="{Binding MonthlyBudget, Mode=TwoWay}" 
+       
            
-               />
+              
             
 
 

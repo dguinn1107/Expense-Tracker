@@ -12,7 +12,7 @@ namespace ExpenseTracker
         private SettingsModel _settings;
         private string _monthlyBudget;
         private string _monthlyBudgetError;
-        private string _formattedMonthlyBudget;
+       
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -26,18 +26,7 @@ namespace ExpenseTracker
             NotificationsEnabled = _settings.NotificationsEnabled;
         }
 
-        public string FormattedMonthlyBudget
-        {
-            get => $"Monthly Budget: {MonthlyBudget}";
-            set
-            {
-                if (_formattedMonthlyBudget != value)
-                {
-                    _formattedMonthlyBudget = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+    
 
         public bool IsDarkMode
         {
@@ -88,7 +77,7 @@ namespace ExpenseTracker
                 {
                     _monthlyBudget = value;
                     OnPropertyChanged();
-                    OnPropertyChanged(nameof(FormattedMonthlyBudget));
+                  
                 }
             }
         }
