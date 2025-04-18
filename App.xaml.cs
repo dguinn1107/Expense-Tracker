@@ -7,13 +7,14 @@
 
         public App()
         {
+            
             InitializeComponent();
 
             _viewModel = new SettingsViewModel();
 
             _viewModel.ApplySettings();
 
-            MainPage = new MainPage();
+            MainPage = new AppShell();
         }
 
    
