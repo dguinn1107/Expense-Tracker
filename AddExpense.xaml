@@ -4,9 +4,10 @@
              x:Class="ExpenseTracker.AddExpense"
              Title="AddExpense"
              BackgroundColor="{DynamicResource AppBackgroundColor}">
-    
-    <VerticalStackLayout>
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="5" >
         <Label 
+            Grid.Row="0"
             Text="Your Expenses"
             TextColor="{DynamicResource AppTextColor}"
             FontSize="32"
@@ -22,39 +23,64 @@
         !! Commented your button out in case it is to be used !!
         /> -->
 
-        <CollectionView x:Name="TransactionList"
+        <Frame Grid.Row="1"
+               BorderColor="Gray"
+       CornerRadius="19"
+       Margin="12,5"
+       HasShadow="True"
+       BackgroundColor="White"
+       VerticalOptions="FillAndExpand">
+
+            <CollectionView x:Name="TransactionList"
                 ItemsSource="{Binding transactions}"
-                HeightRequest="300">
+                VerticalOptions="FillAndExpand">
 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <VerticalStackLayout Margin="0,1">
+                    <VerticalStackLayout Margin="0,10">
                         
                     <Frame
-                        Margin="8,5"
+                        Margin="1,4"
                         CornerRadius="15"
                         BackgroundColor="White"
                         BorderColor="LightGray"
-                        Padding="1"
-                        HasShadow="True">
                         
-                        <Label Text="{Binding .}"
+                        HasShadow="True">
+                            <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto">
+
+                                <Label Text="{Binding .}"
  
-                    Padding="8"
-                    FontSize="15"
-                    TextColor="{DynamicResource AppTextColor}"
-                    LineBreakMode="WordWrap"/>
-                        <!-- the . binds the whole csv string to label -->
-                    </Frame>
+                                    Padding="1"
+                                      Margin="1,0"
+                                    FontSize="15"
+                                    TextColor="{DynamicResource AppTextColor}"
+                                    LineBreakMode="WordWrap"
+                                    Grid.Column="0"/>
+                                <!-- the . binds the whole csv string to label -->
+
+                                <Button Grid.Column="1" 
+                                        Margin="3,1"
+                                        Padding="12"
+                                        Text=" Delete "
+                                        FontSize="15"
+                                        Clicked="DeleteExpenseClicked"
+                                        CommandParameter="{Binding .}" />
+                            </Grid>
+                        </Frame>
                     </VerticalStackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        
-      
+        </Frame>
 
-        <Button Text="Add Expense"
-        Clicked="OnAddExpenseClicked"/>
+
+
+        <Button Text="+ Add Expense"
+                FontSize="20"
+                Clicked="OnAddExpenseClicked"
+                Grid.Row="2"
+                Margin="30,6"
+                VerticalOptions="End"/>
         
-    </VerticalStackLayout>
+    </Grid>
 </ContentPage>

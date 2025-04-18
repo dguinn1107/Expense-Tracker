@@ -114,4 +114,51 @@ public partial class AddExpense : ContentPage
             }
         }
     }
+
+    private async void DeleteExpenseClicked(object sender, EventArgs e)//method for deletion once user clicks on delete button in xaml
+    {
+        if (sender is Button deleteButton && deleteButton.CommandParameter is string transactionToDelete)
+        {
+            bool confirm = await DisplayAlert("Delete Expense",
+                "Are you sure you want to delete this expense?",
+                "Yes", "No");
+
+            if (confirm)
+            {
+                transactions.Remove(transactionToDelete); //remove from ObservableCollection
+
+                //remove from csv
+                var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                var filePath = Path.Combine(folderPath, "expenses.csv");
+
+                if (File.Exists(filePath))
+                {
+                    var lines = File.ReadAllLines(filePath).ToList();
+                    var headers = lines[0];
+                    var entries = lines.Skip(1).ToList();
+
+                    var formattedTransaction = transactionToDelete
+                        .Replace("Name: ", "")
+                        .Replace("Type: ", "")
+                        .Replace("Amount: $", "")
+                        .Replace("Date: ", "")
+                        .Split("\n");
+
+                    if (formattedTransaction.Length == 4)
+                    {
+                        string lineToRemove = $"{formattedTransaction[0]},{formattedTransaction[2]},{formattedTransaction[1]},{formattedTransaction[3]}";
+
+                        entries.RemoveAll(l => l.Trim() == lineToRemove.Trim());
+
+                        File.WriteAllLines(filePath, new[] { headers }.Concat(entries));
+                    }
+                }
+
+                //refresh list
+                TransactionList.ItemsSource = null;
+                TransactionList.ItemsSource = transactions;
+            }
+        }
+    }
+
 }
