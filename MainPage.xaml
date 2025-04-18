@@ -4,7 +4,9 @@
             xmlns:microcharts="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"  
             x:Class="ExpenseTracker.MainPage">  
    <Grid RowDefinitions="Auto, *, Auto"  
-         BackgroundColor="{DynamicResource AppBackgroundColor}">  
+         BackgroundColor="{DynamicResource AppBackgroundColor}"
+ 
+         >  
 
        <!-- Header Section
        <Grid Padding="15" BackgroundColor="Transparent">  
@@ -47,7 +49,7 @@
            HorizontalOptions="Center"
            VerticalOptions="Center"
            Grid.Row="1"
-           Text="{Binding FormattedMonthlyBudget}" 
+           Text="{Binding MonthlyBudget, Mode=TwoWay}" 
            
                />
             

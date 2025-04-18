@@ -1,7 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.CompilerServices;
+using Microsoft.Maui.Controls;
 
 namespace ExpenseTracker
 {
@@ -10,19 +12,31 @@ namespace ExpenseTracker
         private SettingsModel _settings;
         private string _monthlyBudget;
         private string _monthlyBudgetError;
-
-        public string FormattedMonthlyBudget => $"Monthly Budget: ${MonthlyBudget}";
+        private string _formattedMonthlyBudget;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public SettingsViewModel()
         {
-            // Load existing settings from file or use defaults.
+            // Load existing settings from the model
             _settings = SettingsModel.LoadSettings();
             MonthlyBudget = _settings.MonthlyBudget;
             IsDarkMode = _settings.IsDarkMode;
             Language = _settings.Language;
             NotificationsEnabled = _settings.NotificationsEnabled;
+        }
+
+        public string FormattedMonthlyBudget
+        {
+            get => $"Monthly Budget: {MonthlyBudget}";
+            set
+            {
+                if (_formattedMonthlyBudget != value)
+                {
+                    _formattedMonthlyBudget = value;
+                    OnPropertyChanged();
+                }
+            }
         }
 
         public bool IsDarkMode
@@ -34,20 +48,8 @@ namespace ExpenseTracker
                 {
                     _settings.IsDarkMode = value;
                     OnPropertyChanged();
-                    UpdateTheme(); // Apply theme changes
+                    // No immediate theme update; will update only on save
                 }
-            }
-        }
-
-        private void UpdateTheme()
-        {
-            if (_settings.IsDarkMode)
-            {
-                Application.Current.Resources["AppBackgroundColor"] = Color.FromArgb("#345D7E");
-            }
-            else
-            {
-                Application.Current.Resources["AppBackgroundColor"] = Color.FromArgb("#FFFFFF");
             }
         }
 
@@ -84,8 +86,8 @@ namespace ExpenseTracker
             {
                 if (_monthlyBudget != value)
                 {
-                    ValidateMonthlyBudget();
                     _monthlyBudget = value;
+                    OnPropertyChanged();
                     OnPropertyChanged(nameof(FormattedMonthlyBudget));
                 }
             }
@@ -104,45 +106,87 @@ namespace ExpenseTracker
             }
         }
 
-        private void ValidateMonthlyBudget()
+        public bool ValidateMonthlyBudget(string userBudget)
         {
-            // Check for empty input
-            if (string.IsNullOrEmpty(MonthlyBudget))
+            if (string.IsNullOrEmpty(userBudget))
             {
                 MonthlyBudgetError = "Please enter a valid budget";
-                return;
+                return false;
             }
-            // Check if value is a valid decimal number
-            if (!decimal.TryParse(MonthlyBudget, NumberStyles.Number, CultureInfo.CurrentCulture, out decimal budget))
+            if (!decimal.TryParse(userBudget, NumberStyles.Number, CultureInfo.CurrentCulture, out decimal budget))
             {
                 MonthlyBudgetError = "Invalid number format";
-                return;
+                return false;
             }
-            // Ensure the budget is non-negative
-            if (budget < 0)
+            if (budget <= 0)
             {
                 MonthlyBudgetError = "Budget cannot be negative";
-                return;
+                return false;
             }
-            // Check the length of the input
-            if (MonthlyBudget.Length > 10)
+            if (userBudget.Length > 10)
             {
                 MonthlyBudgetError = "Budget too long";
-                return;
+                return false;
             }
-            // All validations passed.
             MonthlyBudgetError = string.Empty;
-            _settings.MonthlyBudget = MonthlyBudget;
+            return true;
         }
+
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null) =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         public void SaveSettings()
         {
-            _settings.SaveSettings();
+            Debug.WriteLine($"Current MonthlyBudget: {MonthlyBudget}");
+            if (ValidateMonthlyBudget(MonthlyBudget))
+            {
+                _settings.MonthlyBudget = MonthlyBudget;
+                _settings.SaveSettings();
+            }
+            else
+            {
+                Debug.WriteLine("Invalid Monthly Budget.");
+            }
         }
 
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        public void LoadSettings()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            _settings = SettingsModel.LoadSettings();
+            MonthlyBudget = _settings.MonthlyBudget;
+            IsDarkMode = _settings.IsDarkMode;
+            Language = _settings.Language;
+            NotificationsEnabled = _settings.NotificationsEnabled;
+        }
+
+        public void UpdateTheme()
+        {
+            if (_settings.IsDarkMode)
+            {
+                Application.Current.Resources["AppBackgroundColor"] = Color.FromArgb("#345D7E");
+                Application.Current.Resources["AppTextColor"] = Color.FromArgb("#FFFFFF");
+            }
+            else
+            {
+                Application.Current.Resources["AppBackgroundColor"] = Color.FromArgb("#FFFFFF");
+                Application.Current.Resources["AppTextColor"] = Color.FromArgb("#000000");
+            }
+        }
+
+        public void ApplySettings()
+        {
+            // Validate and then save settings.
+            if (ValidateMonthlyBudget(MonthlyBudget))
+            {
+                _settings.MonthlyBudget = MonthlyBudget;
+                _settings.SaveSettings();
+            }
+            else
+            {
+                Debug.WriteLine("Invalid Monthly Budget.");
+            }
+
+            // Update the global theme based on the saved IsDarkMode value.
+            UpdateTheme();
         }
     }
 }

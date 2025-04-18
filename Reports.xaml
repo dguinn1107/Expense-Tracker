@@ -3,9 +3,11 @@
              xmlns:mc="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
              x:Class="ExpenseTracker.Reports"
              Title="Reports"
-             BackgroundColor="{DynamicResource AppBackgroundColor}">
+             BackgroundColor="{DynamicResource AppBackgroundColor}" >
+
 
     <ScrollView Orientation="Vertical">
+        
         <VerticalStackLayout>
             <Label Text="{Binding ReportLabelText}"
                  TextColor="{DynamicResource AppTextColor}"
@@ -27,25 +29,29 @@
 
 
 
-            <Label Text="Pie Chart" />
+            <Label Text="Pie Chart"
+               TextColor="{DynamicResource AppTextColor}"/>
             <mc:ChartView Chart="{Binding PieChart}"
                         HeightRequest="180"
                         WidthRequest="400"
                         Margin="10" />
 
-            <Label Text="Bar Chart" />
+            <Label Text="Bar Chart"
+                   TextColor="{DynamicResource AppTextColor}"/>
             <mc:ChartView Chart="{Binding BarChart}"
                         HeightRequest="180"
                         WidthRequest="400"
                         Margin="10" />
 
-            <Label Text="Line Chart" />
+            <Label Text="Line Chart" 
+                   TextColor="{DynamicResource AppTextColor}"/>
             <mc:ChartView Chart="{Binding LineChart}"
                         HeightRequest="180"
                         WidthRequest="400"
                         Margin="10" />
 
-            <Label Text="Donut Chart" />
+            <Label Text="Donut Chart" 
+                   TextColor="{DynamicResource AppTextColor}"/>
             <mc:ChartView Chart="{Binding DonutChart}"
                         HeightRequest="180"
                         WidthRequest="400"

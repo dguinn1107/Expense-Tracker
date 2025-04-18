@@ -10,13 +10,18 @@ namespace ExpenseTracker
     public class SettingsModel 
     {
         private const string FilePath = "settings.json";
-       
 
-        public bool IsDarkMode { get; set; }
+
+        public bool IsDarkMode { get; set; } = false;
         public string Language { get; set; } = "en";
         public bool NotificationsEnabled { get; set; } = true;
-        public string 
-            MonthlyBudget { get; set; } = "0";
+        public string  MonthlyBudget { get; set; } = "0";
+
+        public string FormattedMonthlyBudget {get; set;}
+
+
+      
+
 
         public static SettingsModel LoadSettings()
         {
@@ -50,6 +55,7 @@ namespace ExpenseTracker
 
         public void SaveSettings()
         {
+
             string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             string fullPath = System.IO.Path.Combine(folderPath, FilePath);
 
@@ -64,27 +70,12 @@ namespace ExpenseTracker
             string json = JsonSerializer.Serialize(settingsDict);
             File.WriteAllText(fullPath, json);
 
-           ReloadMainPageLabel();
 
 
         }
 
-        public void ReloadMainPageLabel()
-        {
-            string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            string fullPath = Path.Combine(folderPath, "MyAppSettings.json");
 
-            if (File.Exists(fullPath))
-            {
-                string json = File.ReadAllText(fullPath);
-                var settings = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
-
-                if (settings != null && settings.ContainsKey("MonthlyBudget"))
-                {
-                    MonthlyBudget = settings["MonthlyBudget"];
-                }
-            }
-        }
+      
 
 
 

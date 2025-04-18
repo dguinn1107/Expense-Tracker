@@ -5,8 +5,8 @@ namespace ExpenseTracker
     public partial class MainPage : ContentPage
     {
         private ReportsViewModel reportObj;
-        private SettingsModel settingsModel; // Use the separated model
-        public string MonthlyBudgetLabelText { get; set; } = "Monthly Budget: ";
+        private SettingsViewModel _viewModel;
+        
 
 
         public MainPage()
@@ -16,7 +16,11 @@ namespace ExpenseTracker
             reportObj = new ReportsViewModel();
             DisplayChart.Chart = reportObj.LoadRandomChart();
 
-            BindingContext = App.SharedSettingsViewModel;
+            //_viewModel = new SettingsViewModel();
+            //_viewModel.LoadSettings();
+
+
+
         }
 
 

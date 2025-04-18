@@ -1,19 +1,24 @@
 
 ﻿namespace ExpenseTracker
 {
-  public partial class App : Application
+    public partial class App : Application
     {
-        public static SettingsViewModel SharedSettingsViewModel { get; private set; }
+        private SettingsViewModel _viewModel;
 
         public App()
         {
             InitializeComponent();
 
-            SharedSettingsViewModel = new SettingsViewModel();
+            _viewModel = new SettingsViewModel();
 
+            _viewModel.ApplySettings();
 
-            MainPage = new AppShell();
+            MainPage = new MainPage();
         }
+
+   
+
     }
+
 
 }

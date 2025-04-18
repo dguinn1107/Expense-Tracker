@@ -4,41 +4,37 @@
     x:Class="ExpenseTracker.Settings"
     Title="Settings"
     BackgroundColor="{DynamicResource AppBackgroundColor}">
-    
-
-    <!--<ContentPage.BindingContext>
-        <viewmodels:SettingsViewModel />
-    </ContentPage.BindingContext>-->
 
     <StackLayout Padding="20" Spacing="20">
 
-        <Label Text="Monthly Budget:" />
+        <Label Text="Monthly Budget:" 
+               TextColor="{DynamicResource AppTextColor}"/>
         <Entry 
             x:Name="MonthlyBudgetEntry"
             Keyboard="Numeric"
             Text="{Binding MonthlyBudget}" 
             Placeholder="Enter your monthly budget"
-            TextChanged="MonthlyBudgetEntry_TextChanged"
-            />
-        
+            PlaceholderColor="{DynamicResource AppTextColor}"
+        />
 
         <Label 
             Text="{Binding MonthlyBudgetError}" 
             TextColor="Red" 
             IsVisible="{Binding HasError}" />
 
-        <Label Text="Dark Mode:" />
+        <Label Text="Dark Mode:"
+               TextColor="{DynamicResource AppTextColor}"/>
         <Switch 
-            IsToggled="{Binding IsDarkMode}" />
-
-        <Button 
-            Text="Save Settings" 
-            Clicked="SaveSettingsButton_Clicked"
+            IsToggled="{Binding IsDarkMode}"
             
             
             />
 
-        
+        <Button 
+            Text="Save Settings"
+            Clicked="Button_Clicked" 
+        />
+
     </StackLayout>
 
 </ContentPage>
