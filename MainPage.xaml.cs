@@ -4,21 +4,22 @@ namespace ExpenseTracker
 {
     public partial class MainPage : ContentPage
     {
-        private Reports reportObj;
-        private SettingsModel settingsModel; // Use the separated model
-        
+        private ReportsViewModel reportObj;
+        private SettingsModel settingsModel;
+        private Expense expenseObj;
+
 
         public MainPage()
         {
             InitializeComponent();
 
-            reportObj = new Reports();
+            reportObj = new ReportsViewModel();
             DisplayChart.Chart = reportObj.LoadRandomChart();
 
             settingsModel = SettingsModel.LoadSettings();
 
 
-            MonthlyBudgetLabel.Text = $"Monthly Budget: {settingsModel.MonthlyBudget}";
+            //MonthlyBudgetLabel.Text = $"Monthly Budget: {settingsModel.MonthlyBudget}";
         }
 
         public void OnSettingsClicked(object sender, EventArgs e)

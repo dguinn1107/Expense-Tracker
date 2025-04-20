@@ -28,6 +28,22 @@ namespace ExpenseTracker
                 "Other"
             };
 
+        public DateTime _date
+        {
+            get { return Date; }
+            set
+            {
+                if (value == null)
+                {
+                    throw new ArgumentException("Date cannot be null");
+                }
+                else
+                {
+                    Date = value;
+                }
+            }
+        }
+
         public string _Category
         {
             get { return Category; }

@@ -12,14 +12,15 @@ namespace ExpenseTracker
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private int _maxMonth;
-        private int _monthSliderValue = DateTime.Now.Month; // default to current month
-        public int MaxMonth
+        private int MaxMonth;
+        //public int _monthSliderValue = DateTime.Now.Month; // default to current month
+        private int MonthSliderValue { get; set; } = DateTime.Now.Month; // default to current month
+        public int _maxMonth
         {
-            get => _maxMonth;
+            get => MaxMonth;
             set
             {
-                _maxMonth = value;
+                _maxMonth = DateTime.Now.Month;
                 OnPropertyChanged(nameof(MaxMonth));
             }
         }
@@ -27,12 +28,12 @@ namespace ExpenseTracker
 
         public int MaxAvailableMonth { get; set; } = DateTime.Now.Month;
 
-        public int MonthSliderValue
+        public int _monthSliderValue
         {
-            get => _monthSliderValue;
+            get => MonthSliderValue;
             set
             {
-                if (_monthSliderValue != value)
+                if (MonthSliderValue != value)
                 {
                     _monthSliderValue = value;
                     OnPropertyChanged(nameof(MonthSliderValue));

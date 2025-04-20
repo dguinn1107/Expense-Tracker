@@ -10,8 +10,4 @@ public partial class Reports : ContentPage
 
     }
 
-    private void Slider_ValueChanged(object sender, ValueChangedEventArgs e)
-    {
-
-    }
 }
